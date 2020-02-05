@@ -69,6 +69,8 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            title: 'TMS'
+            title: 'TMS',
+            filename: "index.html",
+            template: "./src/index.html"
         })]
 };
