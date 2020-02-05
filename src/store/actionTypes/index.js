@@ -1,5 +1,5 @@
-import * as authActions from './login';
+import * as loginActions from './login';
 
 export default {
-    ...authActions,
+    ...loginActions,
 }

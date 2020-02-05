@@ -6,7 +6,7 @@ const LoginForm = ({ login }) => {
     let history = useHistory();
     const onSubmit = (e) => {
         e.preventDefault();
-        const auth={
+        const auth = {
             login: e.target.elements.login.value,
             password: e.target.elements.password.value,
             language: e.target.elements.language.value

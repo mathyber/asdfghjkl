@@ -1,20 +1,22 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import JwtHelper from '../../utils/jwtHelper';
-import UserService from '../../utils/UserService';
 import actionTypes from '../actionTypes/';
 import actions from '../actions/';
+import userLogin from "../../services/userService";
 
-function* loginSaga({payload}) {
+function* workerLogin({ payload, history }) {
     try {
-        const { data: { accessToken } } = yield call(() => UserService.userLogin(payload))
-        yield JwtHelper.saveTokenToLS(accessToken)
-        yield put(actions.userLoginFailure())
-        yield history.push('/')
-    } catch (error) {
-        yield put(actions.userLoginFailure(error))
+        const {accessToken} = yield call(() => userLogin(payload));
+        // yield setAccessToken(accessToken);
+        // console.log(accessToken);
+        yield JwtHelper.saveToken(accessToken);
+        yield put(actions.userLoginSuccess());
+        yield history.push('/');
+    } catch (e) {
+        yield put(actions.userLoginFailure(e))
     }
 }
 
 export default function* watchLogin() {
-    yield takeLatest(actionTypes.USER_LOGIN_REQUEST, loginSaga)
+    yield takeLatest(actionTypes.USER_LOGIN_REQUEST, workerLogin)
 }

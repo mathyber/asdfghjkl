@@ -1,3 +1,3 @@
-import authReducer from './login';
+import loginReducer from './login';
 
-export default { authReducer };
+export default { loginReducer };
