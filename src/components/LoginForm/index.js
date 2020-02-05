@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { useHistory } from "react-router-dom";
 
+import "./style.scss"
+
 const LoginForm = ({login}) => {
 
     let history = useHistory();
@@ -27,17 +29,14 @@ const LoginForm = ({login}) => {
     };
 
     return (
-        <form onSubmit = { onSubmit }>
-            <label htmlFor="formLogin">
-                <input id="formLogin" type="text" name="login" placeholder="Enter email" onChange={onChangeInput}/>
-            </label>
-            <label htmlFor="formPassword">
-                <input id="formPassword" type="password" name="password" placeholder="Enter password" onChange={onChangeInput}/>
-            </label>
-            <label htmlFor="formLanguage">
-                <input id="formLanguage" type="text" name="language" placeholder="Enter language" onChange={onChangeInput}/>
-            </label>
-            <button type="submit">Login</button>
+        <form className="login-form" onSubmit = { onSubmit }>
+                <input className="login-form__input" type="text" name="login" placeholder="Enter email" onChange={onChangeInput}/>
+                <input className="login-form__input" type="password" name="password" placeholder="Enter password" onChange={onChangeInput}/>
+                <select className="login-form__input" type="language" name="language" onChange={onChangeInput} defaultValue="ru">
+                    <option value="ru">Русский</option>
+                    <option value="en">English</option>
+                </select>
+            <button className="login-form__button" type="submit">Login</button>
         </form>
     )
 }

@@ -1,15 +1,17 @@
 import React from 'react';
 import {Route, Router, Switch} from "react-router-dom";
 import LoginForm from "../containers/login"
+import RouteToLogin from "./RouteToLogin";
+import Header from "./Header";
 
 function App() {
     return (
         <Switch>
-            <Route exact path="/login" component = { LoginForm }>
+            <Route exact path = "/">
+                <RouteToLogin />
+                <Header />
             </Route>
-            <Route path="/">
-                <h2>Home</h2>
-            </Route>
+            <Route exact path = "/login" component = { LoginForm } />
         </Switch>
     );
 }

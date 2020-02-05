@@ -1,6 +1,5 @@
-import { compose, bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import {compose, bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 
 import actions from '../../store/actions';
 
@@ -9,9 +8,8 @@ import LoginForm from '../../components/LoginForm';
 const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch =>
-    bindActionCreators({ login: (data, history) => actions.userLoginRequest(data, history) }, dispatch);
+    bindActionCreators({login: (data, history) => actions.userLoginRequest(data, history)}, dispatch);
 
 export default compose(
-    withRouter,
     connect(mapStateToProps, mapDispatchToProps)
 )(LoginForm);

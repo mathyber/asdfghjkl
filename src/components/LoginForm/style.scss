@@ -1,0 +1,16 @@
+.login-form {
+  font-family: Arial, serif;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  .login-form__input{
+    margin: 5px;
+    width: 200px;
+    padding: 5px;
+  }
+
+  .login-form__button {
+    width: 100px;
+  }
+}
