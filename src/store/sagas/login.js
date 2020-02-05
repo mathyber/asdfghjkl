@@ -19,16 +19,6 @@ function* workerLogin({ payload, history }) {
     }
 }
 
-function* workerLogout({ history }) {
-    try {
-        const token = yield JwtHelper.getToken();
-        yield JwtHelper.removeToken(token);
-        yield history.push('/login');
-    } catch (e) {
-        
-    }
-}
-
 export default function* watchLogin() {
     yield takeLatest(actionTypes.USER_LOGIN_REQUEST, workerLogin)
 }

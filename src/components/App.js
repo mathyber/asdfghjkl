@@ -2,9 +2,10 @@ import React from 'react';
 import {Route, Router, Switch} from "react-router-dom";
 import LoginForm from "../containers/login"
 import RouteToLogin from "./RouteToLogin";
-import Header from "./Header";
+import Header from "../containers/header";
 
 function App() {
+
     return (
         <Switch>
             <Route exact path = "/">

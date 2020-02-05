@@ -1,7 +1,8 @@
-import { fork } from 'redux-saga/effects';
+import { fork, all } from 'redux-saga/effects';
 
-import auth from './login';
+import login from './login';
+import logout from './logout';
 
 export default function* rootSaga() {
-    yield fork(auth)
+    yield all([fork(login), fork(logout)])
 }
