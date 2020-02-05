@@ -32,7 +32,7 @@ const LoginForm = ({login}) => {
         <form className="login-form" onSubmit = { onSubmit }>
                 <input className="login-form__input" type="text" name="login" placeholder="Enter email" onChange={onChangeInput}/>
                 <input className="login-form__input" type="password" name="password" placeholder="Enter password" onChange={onChangeInput}/>
-                <select className="login-form__input" type="language" name="language" onChange={onChangeInput} defaultValue="ru">
+                <select className="login-form__input" name="language" onChange={onChangeInput} defaultValue="ru">
                     <option value="ru">Русский</option>
                     <option value="en">English</option>
                 </select>
