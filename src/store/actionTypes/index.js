@@ -1,5 +1,3 @@
 import * as loginActions from './login';
 
-export default {
-    ...loginActions,
-}
+export default { ...loginActions }

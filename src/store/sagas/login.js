@@ -6,7 +6,7 @@ import userLogin from "../../services/userService";
 
 function* workerLogin({ payload, history }) {
     try {
-        const {accessToken} = yield call(() => userLogin(payload));
+        const { accessToken } = yield call(() => userLogin(payload));
         // yield setAccessToken(accessToken);
         // console.log(accessToken);
         yield JwtHelper.saveToken(accessToken);
