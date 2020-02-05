@@ -1,8 +1,16 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 
-const Header = ({ logout, history }) => {
+const Header = ({ logout }) => {
+
+    let history = useHistory();
+
+    function onClick() {
+        logout(history);
+    }
+
     return (
-        <button onClick={() => logout(history)}> Log out </button>
+        <button onClick={onClick}> Log out </button>
     )
 }
 

@@ -6,6 +6,7 @@ import userLogin from "../../services/userService";
 
 function* workerLogin({ payload, history }) {
     try {
+        //console.log(history);
         const { accessToken } = yield call(() => userLogin(payload));
         // console.log(accessToken);
         // yield setAccessToken(accessToken);
