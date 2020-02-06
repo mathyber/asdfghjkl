@@ -1,7 +1,9 @@
+import {compose, bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 import React, { useState } from 'react'
 import { useHistory } from "react-router-dom";
 
-import "./style.scss"
+import actions from '../../actions/index.jsx';
 
 const LoginForm = ({login}) => {
 
@@ -21,7 +23,7 @@ const LoginForm = ({login}) => {
             ...formValues,
             [name]: value
         })
-    }
+    };
 
     const onSubmit = (event) => {
         event.preventDefault();
@@ -29,16 +31,26 @@ const LoginForm = ({login}) => {
     };
 
     return (
-        <form className="login-form" onSubmit = { onSubmit }>
+        <div className="login">
+            <form className="login-form" onSubmit = { onSubmit }>
                 <input className="login-form__input" type="text" name="login" placeholder="Enter email" onChange={onChangeInput}/>
                 <input className="login-form__input" type="password" name="password" placeholder="Enter password" onChange={onChangeInput}/>
                 <select className="login-form__input" name="language" onChange={onChangeInput} defaultValue="ru">
                     <option value="ru">Русский</option>
                     <option value="en">English</option>
                 </select>
-            <button className="login-form__button" type="submit">Login</button>
-        </form>
+                <button className="login-form__button" type="submit">Login</button>
+            </form>
+        </div>
     )
-}
+};
 
-export default LoginForm
+
+const mapStateToProps = state => ({});
+
+const mapDispatchToProps = dispatch =>
+    bindActionCreators({login: (data, history) => actions.userLoginRequest(data, history)}, dispatch);
+
+export default compose(
+    connect(mapStateToProps, mapDispatchToProps)
+)(LoginForm);

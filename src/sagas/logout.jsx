@@ -1,7 +1,7 @@
 import {put, takeLatest} from 'redux-saga/effects';
-import actionTypes from '../actionTypes/';
-import actions from '../actions/';
-import JwtHelper from '../../utils/jwtHelper';
+import actionTypes from '../actionTypes/index.jsx';
+import actions from '../actions/index.jsx';
+import JwtHelper from '../utils/jwtHelper';
 
 function* workerLogout({ history }) {
     try {

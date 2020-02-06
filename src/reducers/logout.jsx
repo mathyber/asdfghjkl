@@ -1,4 +1,4 @@
-import { USER_LOGOUT_SUCCESS, USER_LOGOUT_FAILURE } from "../actionTypes/logout";
+import { USER_LOGOUT_SUCCESS, USER_LOGOUT_FAILURE } from "../actionTypes/logout.jsx";
 
 export default function (state = {}, { type }) {
     switch (type) {

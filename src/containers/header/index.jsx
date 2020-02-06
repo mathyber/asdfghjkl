@@ -1,8 +1,8 @@
 import {compose, bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import actions from '../../store/actions';
-import Header from '../../components/Header'
+import actions from '../../actions/index.jsx';
+import Header from '../../components/Header/index.jsx'
 
 const mapStateToProps = state => ({});
 

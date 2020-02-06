@@ -1,4 +1,4 @@
-import actionTypes from "../actionTypes/"
+import actionTypes from "../actionTypes/index.jsx"
 
 export const userLoginRequest = (payload, history) => ({
     type: actionTypes.USER_LOGIN_REQUEST,

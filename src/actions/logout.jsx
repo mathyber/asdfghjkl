@@ -1,4 +1,4 @@
-import actionTypes from "../actionTypes/"
+import actionTypes from "../actionTypes/index.jsx"
 
 export const userLogoutSuccess = history => ({
     type: actionTypes.USER_LOGOUT_SUCCESS,

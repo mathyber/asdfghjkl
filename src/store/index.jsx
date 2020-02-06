@@ -2,8 +2,8 @@ import createSagaMiddleware from 'redux-saga';
 import "regenerator-runtime"
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 
-import rootReducer from './reducers/';
-import saga from './sagas'
+import rootReducer from '../reducers/index.jsx';
+import saga from '../sagas/index.jsx'
 
 const sagaMiddleware = createSagaMiddleware();
 
