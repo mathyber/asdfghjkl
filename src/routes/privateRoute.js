@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import JwtHelper from "../../utils/jwtHelper";
+import JwtHelper from "../utils/jwtHelper";
 
 const PrivateRoute = ({component: Component, ...rest}) => {
     return (

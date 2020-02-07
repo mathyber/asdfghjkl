@@ -1,8 +1,10 @@
 import {compose, bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import React, { useState } from 'react'
-import { useHistory } from "react-router-dom";
+import React, {useState} from 'react'
+import {useHistory} from "react-router-dom";
 
+import imgLogin from "../../images/login.png";
+import imgPass from "../../images/password.png";
 import actions from '../../actions/index.jsx';
 
 const LoginForm = ({login}) => {
@@ -12,11 +14,11 @@ const LoginForm = ({login}) => {
     const [formValues, setFromValues] = useState({
         login: "",
         password: "",
-        language: ""
+        language: "ru",
     });
 
     const onChangeInput = (event) => {
-        const name =  event.target.name;
+        const name = event.target.name;
         const value = event.target.value;
 
         setFromValues({
@@ -31,17 +33,41 @@ const LoginForm = ({login}) => {
     };
 
     return (
+
         <div className="login">
-            <form className="login-form" onSubmit = { onSubmit }>
-                <input className="login-form__input" type="text" name="login" placeholder="Enter login" onChange={onChangeInput}/>
-                <input className="login-form__input" type="password" name="password" placeholder="Enter password" onChange={onChangeInput}/>
-                <select className="login-form__input" name="language" onChange={onChangeInput} defaultValue="ru">
-                    <option value="ru">Русский</option>
-                    <option value="en">English</option>
-                </select>
+            <div className="text-company">
+                <h2 className="text-company__name">
+                    TMS Beiersdorf
+                </h2>
+                <div className="text-company__about">
+                    TMS для компании Beiersdorf
+                </div>
+            </div>
+
+            <select className="language-select" name="language" onChange={onChangeInput} defaultValue="ru">
+                <option className="language-select__option" value="en">English</option>
+                <option className="language-select__option" value="ru">Русский</option>
+            </select>
+
+            <form className="login-form" onSubmit={onSubmit}>
+                <div>
+                    <img className="login-form__img" src={imgLogin}/>
+                    <input className="login-form__input" type="text" name="login"
+                           placeholder="Enter login"
+                           onChange={onChangeInput} required/>
+                </div>
+                <div>
+                    <img className="login-form__img" src={imgPass}/>
+                    <input className="login-form__input" type="password" name="password"
+                           placeholder="Enter password"
+                           onChange={onChangeInput} required/>
+                </div>
+
                 <button className="login-form__button" type="submit">Login</button>
             </form>
         </div>
+
+
     )
 };
 

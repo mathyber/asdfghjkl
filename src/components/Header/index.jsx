@@ -11,7 +11,7 @@ const Header = ({logout}) => {
 
     return (
         <header className="header">
-            <button className="login-form__button" onClick={onClick}> Log out</button>
+            <button className="header__button" onClick={onClick}> Logout</button>
         </header>
     )
 }
