@@ -67,9 +67,13 @@ body {
 
       border-radius: 10px;
 
+      .login-form__img-inp {
+        display: flex;
+        flex-wrap: nowrap;
+      }
+
       .login-form__input {
         margin: 5px;
-        width: 200px;
         padding: 5px;
 
         border-radius: 10px;

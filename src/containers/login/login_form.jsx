@@ -7,8 +7,10 @@ import imgLogin from "../../images/login.png";
 import imgPass from "../../images/password.png";
 import actions from '../../actions/index.jsx';
 
-const LoginForm = ({login}) => {
+//import { useTranslation } from 'react-i18next';
 
+const LoginForm = ({login}) => {
+ //   const { t, i18n } = useTranslation("ru");
     let history = useHistory();
 
     const [formValues, setFromValues] = useState({
@@ -20,7 +22,6 @@ const LoginForm = ({login}) => {
     const onChangeInput = (event) => {
         const name = event.target.name;
         const value = event.target.value;
-
         setFromValues({
             ...formValues,
             [name]: value
@@ -50,20 +51,21 @@ const LoginForm = ({login}) => {
             </select>
 
             <form className="login-form" onSubmit={onSubmit}>
-                <div>
+                <div className="login-form__img-inp">
                     <img className="login-form__img" src={imgLogin}/>
                     <input className="login-form__input" type="text" name="login"
-                           placeholder="Enter login"
+                           //placeholder={t('login')}
+                           placeholder='login'
                            onChange={onChangeInput} required/>
                 </div>
-                <div>
+                <div className="login-form__img-inp">
                     <img className="login-form__img" src={imgPass}/>
                     <input className="login-form__input" type="password" name="password"
-                           placeholder="Enter password"
+                           //placeholder={t('password')}
+                           placeholder='password'
                            onChange={onChangeInput} required/>
                 </div>
-
-                <button className="login-form__button" type="submit">Login</button>
+                <button className="login-form__button" type="submit">Войти</button>
             </form>
         </div>
 

@@ -18,6 +18,9 @@
     "axois": "0.0.1-security",
     "copy-webpack-plugin": "^5.1.1",
     "file-loader": "^5.0.2",
+    "i18next-xhr-backend": "^3.2.2",
+    "js-base64": "latest",
+    "prop-types": "latest",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-i18next": "^11.3.1",
@@ -26,9 +29,7 @@
     "redux-logger": "^3.0.6",
     "redux-saga": "^1.1.3",
     "regenerator-runtime": "^0.13.3",
-    "reselect": "^4.0.0",
-    "js-base64": "latest",
-    "prop-types": "latest"
+    "reselect": "^4.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.3",
@@ -40,6 +41,8 @@
     "css-loader": "^3.4.2",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "html-webpack-plugin": "^3.2.0",
+    "i18next": "^19.1.0",
+    "i18next-browser-languagedetector": "^4.0.1",
     "node-sass": "^4.13.0",
     "path": "^0.12.7",
     "react-router-dom": "^5.1.2",
