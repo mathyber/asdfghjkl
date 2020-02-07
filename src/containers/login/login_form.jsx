@@ -33,7 +33,7 @@ const LoginForm = ({login}) => {
     return (
         <div className="login">
             <form className="login-form" onSubmit = { onSubmit }>
-                <input className="login-form__input" type="text" name="login" placeholder="Enter email" onChange={onChangeInput}/>
+                <input className="login-form__input" type="text" name="login" placeholder="Enter login" onChange={onChangeInput}/>
                 <input className="login-form__input" type="password" name="password" placeholder="Enter password" onChange={onChangeInput}/>
                 <select className="login-form__input" name="language" onChange={onChangeInput} defaultValue="ru">
                     <option value="ru">Русский</option>
@@ -44,7 +44,6 @@ const LoginForm = ({login}) => {
         </div>
     )
 };
-
 
 const mapStateToProps = state => ({});
 
