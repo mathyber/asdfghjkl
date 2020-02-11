@@ -1,7 +1,7 @@
 import {put, takeLatest} from 'redux-saga/effects';
-import actionTypes from '../actionTypes/index.jsx';
-import actions from '../actions/index.jsx';
+import actions from '../actions';
 import JwtHelper from '../utils/jwtHelper';
+import {USER_LOGOUT_SUCCESS} from "../actions/logout";
 
 function* workerLogout({ history }) {
     try {
@@ -15,5 +15,5 @@ function* workerLogout({ history }) {
 }
 
 export default function* watchLogout() {
-    yield takeLatest(actionTypes.USER_LOGOUT_SUCCESS, workerLogout)
+    yield takeLatest(USER_LOGOUT_SUCCESS, workerLogout)
 }

@@ -1,4 +1,4 @@
-import { USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGIN_FAILURE } from "../actionTypes/login.jsx";
+import { USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGIN_FAILURE } from "../actions/login";
 
 export default function (state = {}, { type, payload }) {
     switch (type) {

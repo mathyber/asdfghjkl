@@ -1,4 +1,4 @@
-import loginReducer from './login.jsx';
-import logoutReducer from './logout.jsx';
+import loginReducer from './login.js';
+import logoutReducer from './logout.js';
 
 export default { loginReducer, logoutReducer };

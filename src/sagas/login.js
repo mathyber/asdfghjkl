@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import actionTypes from '../actionTypes/index.jsx';
-import actions from '../actions/index.jsx';
+import actions from '../actions';
+import { USER_LOGIN_REQUEST } from "../actions/login"
 import JwtHelper from '../utils/jwtHelper';
 import {postman} from "../utils/postman";
 
@@ -21,5 +21,5 @@ function* workerLogin({ payload, history }) {
 }
 
 export default function* watchLogin() {
-    yield takeLatest(actionTypes.USER_LOGIN_REQUEST, workerLogin)
+    yield takeLatest(USER_LOGIN_REQUEST, workerLogin)
 }

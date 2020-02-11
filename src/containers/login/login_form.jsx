@@ -1,16 +1,13 @@
 import {compose, bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import React, {useState} from 'react'
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import imgLogin from "../../images/login.png";
 import imgPass from "../../images/password.png";
-import actions from '../../actions/index.jsx';
-
-//import { useTranslation } from 'react-i18next';
+import actions from '../../actions';
 
 const LoginForm = ({login}) => {
- //   const { t, i18n } = useTranslation("ru");
     let history = useHistory();
 
     const [formValues, setFromValues] = useState({
@@ -54,14 +51,12 @@ const LoginForm = ({login}) => {
                 <div className="login-form__img-inp">
                     <img className="login-form__img" src={imgLogin}/>
                     <input className="login-form__input" type="text" name="login"
-                           //placeholder={t('login')}
                            placeholder='login'
                            onChange={onChangeInput} required/>
                 </div>
                 <div className="login-form__img-inp">
                     <img className="login-form__img" src={imgPass}/>
                     <input className="login-form__input" type="password" name="password"
-                           //placeholder={t('password')}
                            placeholder='password'
                            onChange={onChangeInput} required/>
                 </div>

@@ -10,6 +10,10 @@ module.exports = {
         publicPath: "/"
     },
 
+    resolve: {
+        extensions: ['.js', '.jsx'],
+    },
+
     watch: true,
     watchOptions: {
         aggregateTimeout: 100
