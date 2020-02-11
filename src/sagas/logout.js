@@ -5,7 +5,6 @@ import {USER_LOGOUT_SUCCESS} from "../actions/logout";
 
 function* workerLogout({ history }) {
     try {
-        //console.log(history);
         yield JwtHelper.removeToken();
         yield history.push('/login');
     } catch (e) {
