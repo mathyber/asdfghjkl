@@ -3,7 +3,7 @@ import { LOGIN_LINK } from "./link";
 import LoginForm from "../containers/login/login_form.jsx";
 import Header from "../containers/header/index.jsx";
 import { Route, Switch } from "react-router-dom";
-import PrivateRoute from "./privateRoute.js";
+import PrivateRoute from "./privateRoute";
 
 function MainRouter() {
     return (
