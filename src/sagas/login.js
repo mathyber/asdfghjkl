@@ -6,12 +6,8 @@ import {postman} from "../utils/postman";
 
 function* workerLogin({ payload, history }) {
     try {
-        //console.log(history);
         const { accessToken } = yield call(() => postman.post('/identity/login', payload));
-        // console.log(accessToken);
-        // yield setAccessToken(accessToken);
         yield JwtHelper.saveToken(accessToken);
-       // yield put({type: actionTypes.USER_LOGIN_SUCCESS});
         yield put(actions.userLoginSuccess());
         yield history.push('/');
     } catch (e) {
