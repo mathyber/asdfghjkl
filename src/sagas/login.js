@@ -2,12 +2,12 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import actionTypes from '../actionTypes/index.jsx';
 import actions from '../actions/index.jsx';
 import JwtHelper from '../utils/jwtHelper';
-import userLogin from "../services/userService";
+import {postman} from "../utils/postman";
 
 function* workerLogin({ payload, history }) {
     try {
         //console.log(history);
-        const { accessToken } = yield call(() => userLogin(payload));
+        const { accessToken } = yield call(() => postman.post('/identity/login', payload));
         // console.log(accessToken);
         // yield setAccessToken(accessToken);
         yield JwtHelper.saveToken(accessToken);
