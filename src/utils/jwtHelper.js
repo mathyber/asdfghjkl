@@ -1,6 +1,6 @@
 class JwtHelper {
 
-  static get getToken() {
+  static get token() {
     return localStorage.getItem('token');
   }
 
@@ -11,7 +11,6 @@ class JwtHelper {
   static removeToken() {
     localStorage.removeItem('token');
   }
-
 }
 
 export default JwtHelper

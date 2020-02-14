@@ -1,7 +1,6 @@
 import { USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGIN_FAILURE } from "../actions/login";
 
 const initialState = {
-   isAuth: "f"
 }
 
 export default function (state = initialState, { type, payload }) {

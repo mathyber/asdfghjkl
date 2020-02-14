@@ -1,52 +1,48 @@
 import React from "react";
-//import { useHistory } from "react-router-dom";
-
-/*
-const Header = ({ logout }) => {
-
-    let history = useHistory();
-
-   console.log(this.props.userName);
-
-    function onClick() {
-        logout(history);
-    }
-
-    return (
-        <header className="header">
-            <button className="header__button" onClick={onClick}>Logout</button>
-        </header>
-    )
-}*/
 
 class Header extends React.Component{
     constructor(props) {
         super(props);
-
         this.onClick = this.onClick.bind(this);
+        this.clickDropdown = this.clickDropdown.bind(this);
+        this.onBlur = this.onBlur.bind(this);
     }
 
     componentDidMount() {
         this.props.getUserInfo()
     }
 
-  //  history = useHistory();
     onClick() {
         this.props.logout(this.props.history);
     }
 
-    render(){
+    clickDropdown(e) {
+        document.getElementById("dropdown__content").classList.toggle("show");
+    }
 
-       // console.log(this.props.userName);
+    onBlur(e) {
+        e.preventDefault()
+        console.log(e);
+            let myDropdown = document.getElementById("dropdown__content");
+            if (myDropdown.classList.contains('show')) {
+                myDropdown.classList.remove('show');
+            }
+    }
+
+    render(){
 
         return(
             <header className="header">
-                <div className="header__text">{`${this.props.userData.userName} (${this.props.userData.userRole})`}</div>
-                <button className="header__button" onClick={this.onClick}>Выйти</button>
+                    <button className="dropdown__button" onClick={this.clickDropdown} tabIndex={0} onBlur={this.onBlur}>{`${this.props.userData.userName} (${this.props.userData.userRole})`}
+                        <div className="dropdown__content" id="dropdown__content">
+                            <a className="dropdown__content-link" href="/profile">profile</a>
+                            <a className="dropdown__content-link" onClick={this.onClick}>logout</a>
+                        </div>
+                    </button>
+
             </header>
         )
     }
-
 }
 
 export default Header;
