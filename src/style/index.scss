@@ -5,6 +5,9 @@ body {
   .header {
     background-color: rgb(53, 59, 70);
     height: 50px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
 
     .header__button {
       width: 100px;
@@ -15,8 +18,12 @@ body {
       color: white;
       border: none;
     }
-    .header__button:hover{
+    .header__button:hover {
       background-color: lightslategrey;
+    }
+    .header__text {
+      margin: 5px;
+      padding: 5px;
     }
   }
 

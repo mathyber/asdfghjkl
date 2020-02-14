@@ -6,13 +6,13 @@ export const userLoginRequest = (payload, history) => ({
     type: USER_LOGIN_REQUEST,
     payload,
     history
-})
+});
 
 export const userLoginSuccess = () => ({
     type: USER_LOGIN_SUCCESS,
-})
+});
 
 export const userLoginFailure = payload => ({
     type: USER_LOGIN_FAILURE,
     payload
-})
+});
