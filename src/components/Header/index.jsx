@@ -22,7 +22,6 @@ class Header extends React.Component{
 
     onBlur(e) {
         e.preventDefault()
-        console.log(e);
             let myDropdown = document.getElementById("dropdown__content");
             if (myDropdown.classList.contains('show')) {
                 myDropdown.classList.remove('show');
@@ -30,7 +29,6 @@ class Header extends React.Component{
     }
 
     render(){
-
         return(
             <header className="header">
                     <button className="dropdown__button" onClick={this.clickDropdown} onBlur={this.onBlur}>
@@ -38,11 +36,10 @@ class Header extends React.Component{
                             {`${this.props.userData.userName} (${this.props.userData.userRole})`}
                         </div>
                         <div className="dropdown__content" id="dropdown__content">
-                            <a className="dropdown__content-link" href="/profile">profile</a>
-                            <a className="dropdown__content-link" onClick={this.onClick}>logout</a>
+                            <a className="dropdown__content-link" href="/profile">Профиль</a>
+                            <a className="dropdown__content-link" onClick={this.onClick}>Выход</a>
                         </div>
                     </button>
-
             </header>
         )
     }

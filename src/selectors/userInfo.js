@@ -1,5 +1,3 @@
-const getUserName = state =>
-   // return console.log(state)
-   state.userInfoReducer.data;
+const getUserName = state => state.userInfoReducer.data;
 
 export default { getUserName }

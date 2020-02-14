@@ -128,7 +128,7 @@ body {
       border-left: 0.3em solid transparent;
     }
 
-    .dropdown__button:hover {
+    .dropdown__button:hover, .dropdown__button:focus  {
       background-color: #5d00ff;
     }
 

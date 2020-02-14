@@ -1,7 +1,7 @@
 import {compose, bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import React, {useState} from 'react'
-import { useHistory } from "react-router-dom";
+import {useHistory} from "react-router-dom";
 
 import imgLogin from "../../images/login.png";
 import imgPass from "../../images/password.png";
@@ -38,7 +38,6 @@ const LoginForm = ({login}) => {
 
     function onBlur(e) {
         e.preventDefault()
-        console.log(e);
         let myDropdown = document.getElementById("dropdown__content");
         if (myDropdown.classList.contains('show')) {
             myDropdown.classList.remove('show');
@@ -47,7 +46,6 @@ const LoginForm = ({login}) => {
 
     function onClickLang(event) {
         const value = event.target.lang;
-        console.log(value)
         setFromValues({
             ...formValues,
             language: value
@@ -84,8 +82,6 @@ const LoginForm = ({login}) => {
                 </div>
             </button>
 
-
-
             <div className="text-company">
                 <h2 className="text-company__name">
                     TMS Beiersdorf
@@ -94,9 +90,6 @@ const LoginForm = ({login}) => {
                     TMS для компании Beiersdorf
                 </div>
             </div>
-
-
-
 
             <form className="login-form" onSubmit={onSubmit}>
                 <div className="login-form__img-inp">
