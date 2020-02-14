@@ -12,7 +12,6 @@ body {
     .dropdown__button {
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
       cursor: pointer;
       border: none;
       outline: none;
@@ -20,6 +19,17 @@ body {
       padding: 16px 16px;
       background-color: inherit;
       font-family: inherit;
+    }
+
+    .dropdown__username::after {
+      display: inline-block;
+      margin-left: 0.255em;
+      vertical-align: 0.255em;
+      content: "";
+      border-top: 0.3em solid;
+      border-right: 0.3em solid transparent;
+      border-bottom: 0;
+      border-left: 0.3em solid transparent;
     }
 
     .dropdown__button:hover, .dropdown__button:focus {
@@ -79,17 +89,88 @@ body {
     justify-content: center;
     overflow: auto;
 
+    .dropdown__button {
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      border: none;
+      outline: none;
+      color: white;
+
+      font-family: inherit;
+
+      position: absolute;
+      top: 5%;
+      right: 15%;
+      width: 130px;
+      height: 45px;
+      font-size: 15px;
+
+      background-color: rgb(53, 59, 70);
+    }
+
+    .dropdown__username {
+      left: -5px;
+      position: relative;
+    }
+
+    .dropdown__username::after {
+      position: absolute;
+      top: 20px;
+      left: 100px;
+      display: inline-block;
+      margin-left: 0.255em;
+      vertical-align: 0.255em;
+      content: "";
+      border-top: 0.3em solid;
+      border-right: 0.3em solid transparent;
+      border-bottom: 0;
+      border-left: 0.3em solid transparent;
+    }
+
+    .dropdown__button:hover {
+      background-color: #5d00ff;
+    }
+
+    .dropdown__content {
+      display: none;
+      margin-top: 2px;
+      background-color: rgb(53, 59, 70);
+    }
+
+    .dropdown__content-link {
+      color: white;
+      padding: 12px 16px;
+      text-decoration: none;
+      text-align: left;
+      display: flex;
+      flex-direction: row;
+    }
+
+    .dropdown__content-link img {
+      width: 18px;
+      padding-right: 5px;
+    }
+
+    .dropdown__content-link:hover {
+      background-color: #5d00ff;
+    }
+
+    .show {
+      display: block;
+    }
+
     .text-company {
       margin-right: 20px;
       .text-company__name{
         font-size: 25px;
         font-weight: 700;
-        color: dimgray;
+        color: rgb(53, 59, 70);
       }
       .text-company__about{
         font-size: 15px;
         font-weight: 700;
-        color: rgb(53, 59, 70);
+        color: dimgrey;
       }
     }
 
@@ -112,7 +193,6 @@ body {
       flex-direction: column;
       background-color: rgba(53, 59, 70, 0.75);
 
-      border-radius: 10px;
 
       .login-form__img-inp {
         display: flex;
@@ -123,7 +203,6 @@ body {
         margin: 5px;
         padding: 5px;
 
-        border-radius: 10px;
         font-size: 17px;
         outline: none;
         border: none;
@@ -137,17 +216,21 @@ body {
         opacity: .5;
       }
 
+      .login-form__input:focus {
+        box-shadow: 0 0 10px #5d00ff;
+      }
+
       .login-form__button {
         width: 100px;
         margin: 5px;
         padding: 5px;
         background-color: rgb(53, 59, 70);
-        border-radius: 10px;
+
         color: white;
         border: none;
       }
       .login-form__button:hover{
-        background-color: lightslategrey;
+        background-color: #5d00ff;
       }
     }
   }

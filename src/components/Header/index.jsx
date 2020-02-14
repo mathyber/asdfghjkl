@@ -33,7 +33,10 @@ class Header extends React.Component{
 
         return(
             <header className="header">
-                    <button className="dropdown__button" onClick={this.clickDropdown} tabIndex={0} onBlur={this.onBlur}>{`${this.props.userData.userName} (${this.props.userData.userRole})`}
+                    <button className="dropdown__button" onClick={this.clickDropdown} onBlur={this.onBlur}>
+                        <div className="dropdown__username">
+                            {`${this.props.userData.userName} (${this.props.userData.userRole})`}
+                        </div>
                         <div className="dropdown__content" id="dropdown__content">
                             <a className="dropdown__content-link" href="/profile">profile</a>
                             <a className="dropdown__content-link" onClick={this.onClick}>logout</a>
