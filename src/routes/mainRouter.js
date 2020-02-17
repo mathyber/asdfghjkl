@@ -9,7 +9,8 @@ import JwtHelper from "../utils/jwtHelper";
 function MainRouter() {
     return (
         <Switch>
-            <Route path={LOGIN_LINK} render={() => JwtHelper.token ? <Redirect to={{pathname: "/"}} /> : <LoginForm />} />
+            <Route path={LOGIN_LINK} render={() => JwtHelper.token ?
+                <Redirect to={{pathname: "/"}} /> : <LoginForm />} />
             <PrivateRoute path="/" component={Header}/>
         </Switch>
     );

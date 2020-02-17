@@ -5,6 +5,7 @@ import actions from '../../actions/';
 import Header from '../../components/Header';
 import selector from "../../selectors/userInfo"
 import { withRouter } from "react-router-dom";
+import { withTranslation } from "react-i18next";
 
 const mapStateToProps = state => ({
     userData: selector.getUserName(state)
@@ -17,5 +18,6 @@ const mapDispatchToProps = dispatch => ({
 
 export default compose(
     withRouter,
+    withTranslation(),
     connect(mapStateToProps, mapDispatchToProps)
 )(Header);

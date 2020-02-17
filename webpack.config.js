@@ -1,5 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
 
 module.exports = {
     entry: './src/index.js',
@@ -54,7 +56,15 @@ module.exports = {
                     }
                 }
             },
-
+            {
+                test: /\.(json)$/,
+                use: {
+                    loader: 'file-loader',
+                    options: {
+                        name: '[folder]/[name].[ext]',
+                    }
+                }
+            },
             {
                 test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
                 use: {
@@ -79,9 +89,14 @@ module.exports = {
         historyApiFallback: true
     },
     plugins: [
+        new CopyWebpackPlugin([{
+            from: 'src',
+            to: ''
+        }]),
         new HtmlWebpackPlugin({
             title: 'TMS',
             filename: "index.html",
             template: "./src/index.html"
-        })]
+        }),
+        new HtmlWebpackHarddiskPlugin()]
 };

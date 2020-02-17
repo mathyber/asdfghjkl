@@ -6,6 +6,7 @@ class Header extends React.Component{
         this.onClick = this.onClick.bind(this);
         this.clickDropdown = this.clickDropdown.bind(this);
         this.onBlur = this.onBlur.bind(this);
+
     }
 
     componentDidMount() {
@@ -29,6 +30,7 @@ class Header extends React.Component{
     }
 
     render(){
+        const { t } = this.props;
         return(
             <header className="header">
                     <button className="dropdown__button" onClick={this.clickDropdown} onBlur={this.onBlur}>
@@ -36,8 +38,8 @@ class Header extends React.Component{
                             {`${this.props.userData.userName} (${this.props.userData.userRole})`}
                         </div>
                         <div className="dropdown__content" id="dropdown__content">
-                            <a className="dropdown__content-link" href="/profile">Профиль</a>
-                            <a className="dropdown__content-link" onClick={this.onClick}>Выход</a>
+                            <a className="dropdown__content-link" href="/profile">{t("profile_settings")}</a>
+                            <a className="dropdown__content-link" onClick={this.onClick}>{t("exit")}</a>
                         </div>
                     </button>
             </header>

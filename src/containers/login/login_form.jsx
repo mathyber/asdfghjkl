@@ -1,21 +1,24 @@
-import {compose, bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import React, {useState} from 'react'
-import {useHistory} from "react-router-dom";
+import { compose, bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import React, { useState } from 'react'
+import { useHistory, withRouter } from "react-router-dom";
 
 import imgLogin from "../../images/login.png";
 import imgPass from "../../images/password.png";
 import ru from "../../images/ru.png";
 import en from "../../images/uk.png";
 import actions from '../../actions';
+import { withTranslation } from 'react-i18next';
+import i18next from "i18next";
 
-const LoginForm = ({login}) => {
+const LoginForm = ({ login, t, i18n }) => {
+
     let history = useHistory();
 
     const [formValues, setFromValues] = useState({
         login: "",
         password: "",
-        language: "ru",
+        language: i18next.language,
     });
 
     const onChangeInput = (event) => {
@@ -45,6 +48,7 @@ const LoginForm = ({login}) => {
     }
 
     function onClickLang(event) {
+        i18n.changeLanguage(event.target.lang);
         const value = event.target.lang;
         setFromValues({
             ...formValues,
@@ -84,10 +88,10 @@ const LoginForm = ({login}) => {
 
             <div className="text-company">
                 <h2 className="text-company__name">
-                    TMS Beiersdorf
+                    {t("login_welcome")}
                 </h2>
                 <div className="text-company__about">
-                    TMS для компании Beiersdorf
+                    {t("login_support")}
                 </div>
             </div>
 
@@ -95,16 +99,16 @@ const LoginForm = ({login}) => {
                 <div className="login-form__img-inp">
                     <img className="login-form__img" src={imgLogin}/>
                     <input className="login-form__input" type="text" name="login"
-                           placeholder='login'
+                           placeholder={t("login")}
                            onChange={onChangeInput} required/>
                 </div>
                 <div className="login-form__img-inp">
                     <img className="login-form__img" src={imgPass}/>
                     <input className="login-form__input" type="password" name="password"
-                           placeholder='password'
+                           placeholder={t("password")}
                            onChange={onChangeInput} required/>
                 </div>
-                <button className="login-form__button" type="submit">Войти</button>
+                <button className="login-form__button" type="submit">{t("login_btn")}</button>
             </form>
         </div>
 
@@ -118,10 +122,13 @@ const mapDispatchToProps = dispatch =>
     bindActionCreators({login: (data, history) => actions.userLoginRequest(data, history)}, dispatch);
 
 export default compose(
+    withRouter,
+    withTranslation(),
     connect(mapStateToProps, mapDispatchToProps)
 )(LoginForm);
+
 /*
 <select className="language-select" name="language" onChange={onChangeInput} defaultValue="ru">
-    <option className="language-select__option" value="en">English</option>
+    <option className="language-select__option" value="translation.json">English</option>
     <option className="language-select__option" value="ru">Русский</option>
 </select>*/
