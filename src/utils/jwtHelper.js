@@ -4,6 +4,10 @@ class JwtHelper {
     return localStorage.getItem('token');
   }
 
+  static get isTokenExist() {
+    return !!localStorage.getItem('token');
+  }
+
   static saveToken(token) {
     localStorage.setItem('token', token);
   }

@@ -2,7 +2,7 @@ import React from "react";
 import { LOGIN_LINK } from "./link";
 import LoginForm from "../containers/login/login_form.jsx";
 import Header from "../containers/header/index.jsx";
-import {Redirect, Route, Switch} from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import PrivateRoute from "./privateRoute";
 import JwtHelper from "../utils/jwtHelper";
 
