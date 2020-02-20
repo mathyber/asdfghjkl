@@ -9,6 +9,22 @@ body {
     display: flex;
     justify-content: space-between;
 
+    .nav {
+      display: flex;
+    }
+
+    .DropdownButton {
+      background-color: #5d00ff;
+    }
+
+    .nav__link {
+      border: none;
+      outline: none;
+      color: white;
+      padding: 16px 16px;
+      text-decoration: none;
+    }
+
     .dropdown__button {
       display: flex;
       flex-direction: column;
@@ -32,7 +48,7 @@ body {
       border-left: 0.3em solid transparent;
     }
 
-    .dropdown__button:hover, .dropdown__button:focus {
+    .dropdown__button:hover, .dropdown__button:focus, .nav__link:hover {
       background-color: #5d00ff;
     }
 

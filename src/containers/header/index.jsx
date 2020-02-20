@@ -8,7 +8,9 @@ import { withRouter } from "react-router-dom";
 import { withTranslation } from "react-i18next";
 
 const mapStateToProps = state => ({
-    userData: selector.getUserName(state)
+    userInfo: selector.getUserName(state),
+    appConfig: selector.getAppConfig(state),
+    profile: selector.getProfile(state)
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -8,8 +8,10 @@ function* workerUserInfo() {
     try {
         yield setAccessToken(JwtHelper.token)
         const userData = yield call(() => postman.get("identity/userInfo"));
-       // yield console.log(userName);
-        yield put(actions.userInfoSuccess(userData));
+        const profile = yield call(() => postman.get("profile/info"));
+        const appConfig = yield call(() => postman.get("appConfiguration"));
+     //  yield console.log(userData);
+        yield put(actions.userInfoSuccess({userInfo: userData, profile: profile, appConfig: appConfig}));
     } catch (e) {
         console.log(e);
         yield put(actions.userInfoFailure(e));

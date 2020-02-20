@@ -3,7 +3,7 @@ import React, { Fragment } from 'react';
 import MainRouter from "./routes/mainRouter";
 import Header from "./containers/header";
 import selector from "./selectors/userInfo";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 
 class App extends React.Component {
 
@@ -14,9 +14,7 @@ class App extends React.Component {
     render() {
         return (
             <Fragment>
-                {
-                    this.props.isAuth && <Header />
-                }
+                { this.props.isAuth && <Header /> }
                 <MainRouter/>
             </Fragment>
         )
