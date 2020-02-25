@@ -1,7 +1,7 @@
 import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import React, { useState } from 'react'
-import { useHistory, withRouter } from "react-router-dom";
+import {Link, useHistory, withRouter} from "react-router-dom";
 
 import imgLogin from "../../images/login.png";
 import imgPass from "../../images/password.png";
@@ -10,6 +10,7 @@ import en from "../../images/uk.png";
 import actions from '../../actions';
 import { withTranslation } from 'react-i18next';
 import i18next from "i18next";
+import {Dropdown, DropdownButton} from "react-bootstrap";
 
 const LoginForm = ({ login, t, i18n }) => {
 
@@ -60,8 +61,8 @@ const LoginForm = ({ login, t, i18n }) => {
 
         <div className="login">
 
-            <button className="dropdown__button" onClick={clickDropdown} onBlur={onBlur}>
-                <div className="dropdown__username">
+            <Dropdown className="dropdown__button">
+                <Dropdown.Toggle className="dropdown__username" variant="dark" id="dropdown-basic">
                     {
                         formValues.language === "ru" ?
                             <div className="dropdown__content-link">
@@ -73,18 +74,19 @@ const LoginForm = ({ login, t, i18n }) => {
                                 English
                             </div>
                     }
-                </div>
-                <div className="dropdown__content" id="dropdown__content">
-                    <div className="dropdown__content-link" lang="ru" onClick={onClickLang}>
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                    <Dropdown.Item className="dropdown__item" lang="ru" onClick={onClickLang}>
                         <img src={ru} alt="rus"/>
                         Русский
-                    </div>
-                    <div className="dropdown__content-link" lang="en" onClick={onClickLang}>
+                    </Dropdown.Item>
+                    <Dropdown.Item className="dropdown__item" lang="en" onClick={onClickLang}>
                         <img src={en} alt="eng"/>
                         English
-                    </div>
-                </div>
-            </button>
+                    </Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
 
             <div className="text-company">
                 <h2 className="text-company__name">
@@ -131,4 +133,32 @@ export default compose(
 <select className="language-select" name="language" onChange={onChangeInput} defaultValue="ru">
     <option className="language-select__option" value="translation.json">English</option>
     <option className="language-select__option" value="ru">Русский</option>
-</select>*/
+</select>
+
+            <button className="dropdown__button" onClick={clickDropdown} onBlur={onBlur}>
+                <div className="dropdown__username">
+                    {
+                        formValues.language === "ru" ?
+                            <div className="dropdown__content-link">
+                                <img src={ru} alt="rus"/>
+                                Русский
+                            </div> :
+                            <div className="dropdown__content-link">
+                                <img src={en} alt="eng"/>
+                                English
+                            </div>
+                    }
+                </div>
+                <div className="dropdown__content" id="dropdown__content">
+                    <div className="dropdown__content-link" lang="ru" onClick={onClickLang}>
+                        <img src={ru} alt="rus"/>
+                        Русский
+                    </div>
+                    <div className="dropdown__content-link" lang="en" onClick={onClickLang}>
+                        <img src={en} alt="eng"/>
+                        English
+                    </div>
+                </div>
+            </button>
+
+*/

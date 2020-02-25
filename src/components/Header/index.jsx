@@ -1,92 +1,84 @@
 import React from "react";
 import {Link, NavLink} from "react-router-dom";
-import {DropdownButton, Dropdown} from "react-bootstrap";
+import {DropdownButton, Dropdown, Navbar, Nav, NavDropdown} from "react-bootstrap";
+import {PROFILE_LINK} from "../../routes/link";
+import {LinkContainer} from "react-router-bootstrap"
 
-class Header extends React.Component{
+class Header extends React.Component {
     constructor(props) {
         super(props);
         this.onClick = this.onClick.bind(this);
-        this.clickDropdownUser = this.clickDropdownUser.bind(this);
-        this.clickDropdownDict = this.clickDropdownDict.bind(this);
-        this.onBlurUser = this.onBlurUser.bind(this);
-        this.onBlurDict = this.onBlurDict.bind(this);
-
     }
 
     componentDidMount() {
-        this.props.getUserInfo()
+        this.props.getUserInfo();
     }
 
     onClick() {
         this.props.logout(this.props.history);
     }
 
-    clickDropdownUser(e) {
-        document.getElementById("dropdown-user").classList.toggle("show");
-    }
+//{console.log(this.props.appConfig)}
 
-    clickDropdownDict(e) {
-        document.getElementById("dropdown-dict").classList.toggle("show");
-    }
-
-    onBlurUser(e) {
-        e.preventDefault();
-        let myDropdown = document.getElementById("dropdown-user");
-        if (myDropdown.classList.contains('show')) {
-            myDropdown.classList.remove('show');
-        }
-    }
-
-    onBlurDict(e) {
-        e.preventDefault();
-        let myDropdown = document.getElementById("dropdown-dict");
-        if (myDropdown.classList.contains('show')) {
-            myDropdown.classList.remove('show');
-        }
-    }
-
-    render(){
-        const { t } = this.props;
-        return(
+    render() {
+        const {t} = this.props;
+        return (
             <header className="header">
-                {console.log(this.props.appConfig)}
-                    <nav className="nav">
-                        { this.props.appConfig.grids.map(grid => <Link className="nav__link" key={grid.name} to={grid.name}>{t(`${grid.name}`)}</Link>) }
-                        { this.props.appConfig.dictionaries.map(dictElem => {
-                            return dictElem.showOnHeader &&
-                                <Link className="nav__link" key={dictElem.name} to={dictElem.name}>{t(`${dictElem.name}`)}</Link>
-                        })
+                <Navbar collapseOnSelect expand="lg" bg="muted" variant="dark">
+                    <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
+                    <Nav className="mr-auto">
+                        {this.props.appConfig.grids.map((grid, index) =>
+                            <Nav.Item key={index}>
+                                <LinkContainer to={`/grid/${grid.name}`}>
+                                    <Nav.Link key={index}>
+                                        {t(grid.name)}
+                                    </Nav.Link>
+                                </LinkContainer>
+                            </Nav.Item>
+                        )
                         }
-                        <div className="dropdown__button" onClick={this.clickDropdownDict} onBlur={this.onBlurDict}>
-                            <div className="dropdown__username">
-                                {t("dictionaries")}
-                            </div>
-                            <div className="dropdown__content" id="dropdown-dict">
-                                { this.props.appConfig.dictionaries.map(dictElem => {
-                                    return !dictElem.showOnHeader &&
-                                        <Link className="dropdown__content-link" to={dictElem.name} key={dictElem.name}>{t(`${dictElem.name}`)}</Link>
-                                    })
-                                }
-                            </div>
-                        </div>
-                    </nav>
-                    <div className="dropdown__button" onClick={this.clickDropdownUser} onBlur={this.onBlurUser}>
-                        <div className="dropdown__username">
+
+                        {this.props.appConfig.dictionaries.map((dictElem, index) => {
+                                return dictElem.showOnHeader && <Nav.Item key={index}>
+                                    <LinkContainer to={`/${dictElem.name}`}>
+                                        <Nav.Link key={index}>
+                                            {t(dictElem.name)}
+                                        </Nav.Link>
+                                    </LinkContainer>
+                                </Nav.Item>
+                            }
+                        )
+                        }
+
+                        <NavDropdown title={t("dictionaries")} id="collasible-nav-dropdown">
+                            {this.props.appConfig.dictionaries.map(dictElem => {
+                                return !dictElem.showOnHeader &&
+                                    <NavDropdown.Item key={dictElem.name}
+                                                      onClick={() => this.props.history.push(dictElem.name)}>
+                                        {t(dictElem.name)}
+                                    </NavDropdown.Item>
+                            })
+                            }
+                        </NavDropdown>
+                    </Nav>
+                </Navbar>
+
+                <Navbar>
+                    <Dropdown>
+                        <Dropdown.Toggle className="dropdown__username" id="dropdown-basic" variant="muted">
                             {`${this.props.userInfo.userName} (${this.props.userInfo.userRole})`}
-                        </div>
-                        <div className="dropdown__content" id="dropdown-user">
-                            <Link className="dropdown__content-link" to="/profile">{t("profile_settings")}</Link>
-                            <div className="dropdown__content-link" onClick={this.onClick}>{t("exit")}</div>
-                        </div>
-                    </div>
-                <DropdownButton className="DropdownButton" title={`${this.props.userInfo.userName} (${this.props.userInfo.userRole})`}>
-                    <Dropdown.Item>
-                        <Link to="/profile">{t("profile_settings")}</Link>
-                    </Dropdown.Item>
-                    <Dropdown.Item>
-                        <div onClick={this.onClick}>{t("exit")}</div>
-                    </Dropdown.Item>
-                </DropdownButton>
+                        </Dropdown.Toggle>
+
+                        <Dropdown.Menu>
+                            <Dropdown.Item onClick={() => this.props.history.push(PROFILE_LINK)}>
+                                {t("profile_settings")}
+                            </Dropdown.Item>
+                            <Dropdown.Item onClick={this.onClick}>
+                                {t("exit")}
+                            </Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </Navbar>
             </header>
         )
     }
