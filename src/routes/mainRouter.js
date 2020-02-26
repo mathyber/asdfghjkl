@@ -11,7 +11,7 @@ function MainRouter() {
         <Switch>
             <Route path={LOGIN_LINK} render={() => JwtHelper.isTokenExist ?
                 <Redirect to={{pathname: "/grid/orders"}} /> : <LoginForm />} />
-            <PrivateRoute path="/grid/orders" component={Grid}/>
+            <PrivateRoute path="/" component={Grid}/>
         </Switch>
     );
 }
