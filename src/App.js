@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 
 import MainRouter from "./routes/mainRouter";
 import Header from "./containers/header";
-import selector from "./selectors/userInfo";
+import selector from "./selectors";
 import { connect } from "react-redux";
 
 class App extends React.Component {
@@ -22,7 +22,7 @@ class App extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    isAuth: selector.isAuth
+    isAuth: selector.auth.isAuth(state)
 });
 
 const mapDispatchToProps = dispatch => ({

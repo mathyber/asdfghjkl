@@ -10,7 +10,7 @@ function* workerUserInfo() {
         const userData = yield call(() => postman.get("identity/userInfo"));
         const profile = yield call(() => postman.get("profile/info"));
         const appConfig = yield call(() => postman.get("appConfiguration"));
-     //  yield console.log(userData);
+    //   yield console.log(appConfig);
         yield put(actions.userInfoSuccess({userInfo: userData, profile: profile, appConfig: appConfig}));
     } catch (e) {
         console.log(e);

@@ -19,4 +19,4 @@ export const userInfoFailure = () => (
     {
         type: USER_INFO_FAILURE
     }
-)
+);

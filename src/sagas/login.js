@@ -10,7 +10,7 @@ function* workerLogin({ payload, history }) {
         yield JwtHelper.saveToken(accessToken);
        // yield console.log(postman.get("identity/userInfo"));
         yield put(actions.userLoginSuccess());
-        yield history.push('/');
+        yield history.push('/grid/orders');
     } catch (e) {
         console.log(e);
         yield put(actions.userLoginFailure(e));

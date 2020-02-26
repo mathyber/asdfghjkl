@@ -1,7 +1,7 @@
 import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import React, { useState } from 'react'
-import {Link, useHistory, withRouter} from "react-router-dom";
+import {useHistory, withRouter} from "react-router-dom";
 
 import imgLogin from "../../images/login.png";
 import imgPass from "../../images/password.png";
@@ -10,7 +10,7 @@ import en from "../../images/uk.png";
 import actions from '../../actions';
 import { withTranslation } from 'react-i18next';
 import i18next from "i18next";
-import {Dropdown, DropdownButton} from "react-bootstrap";
+import {Dropdown} from "react-bootstrap";
 
 const LoginForm = ({ login, t, i18n }) => {
 

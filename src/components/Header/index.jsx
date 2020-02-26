@@ -1,6 +1,5 @@
 import React from "react";
-import {Link, NavLink} from "react-router-dom";
-import {DropdownButton, Dropdown, Navbar, Nav, NavDropdown} from "react-bootstrap";
+import {Dropdown, Navbar, Nav, NavDropdown} from "react-bootstrap";
 import {PROFILE_LINK} from "../../routes/link";
 import {LinkContainer} from "react-router-bootstrap"
 
@@ -51,12 +50,13 @@ class Header extends React.Component {
                         }
 
                         <NavDropdown title={t("dictionaries")} id="collasible-nav-dropdown">
-                            {this.props.appConfig.dictionaries.map(dictElem => {
+                            {this.props.appConfig.dictionaries.map((dictElem, index) => {
                                 return !dictElem.showOnHeader &&
-                                    <NavDropdown.Item key={dictElem.name}
-                                                      onClick={() => this.props.history.push(dictElem.name)}>
-                                        {t(dictElem.name)}
-                                    </NavDropdown.Item>
+                                    <LinkContainer to={`/${dictElem.name}`} key={index}>
+                                        <NavDropdown.Item key={index}>
+                                            {t(dictElem.name)}
+                                        </NavDropdown.Item>
+                                    </LinkContainer>
                             })
                             }
                         </NavDropdown>

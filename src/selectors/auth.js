@@ -1,3 +1,3 @@
-const isAuth = state => state.login.isAuth;
+const isAuth = state => state.loginReducer.isAuth;
 
 export default { isAuth }
