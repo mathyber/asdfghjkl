@@ -1,7 +1,7 @@
 import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import React, { useState } from 'react'
-import {useHistory, withRouter} from "react-router-dom";
+import {useHistory, withRouter} from "react-router";
 
 import imgLogin from "../../images/login.png";
 import imgPass from "../../images/password.png";
@@ -35,18 +35,6 @@ const LoginForm = ({ login, t, i18n }) => {
         event.preventDefault();
         login(formValues, history);
     };
-
-    function clickDropdown(e) {
-        document.getElementById("dropdown__content").classList.toggle("show");
-    }
-
-    function onBlur(e) {
-        e.preventDefault()
-        let myDropdown = document.getElementById("dropdown__content");
-        if (myDropdown.classList.contains('show')) {
-            myDropdown.classList.remove('show');
-        }
-    }
 
     function onClickLang(event) {
         i18n.changeLanguage(event.target.lang);

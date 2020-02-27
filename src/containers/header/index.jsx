@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import actions from '../../actions/';
 import Header from '../../components/Header';
 import selector from "../../selectors/userInfo"
-import { withRouter } from "react-router-dom";
+import { withRouter } from "react-router";
 import { withTranslation } from "react-i18next";
 
 const mapStateToProps = state => ({
@@ -19,7 +19,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default compose(
-    withTranslation(),
     withRouter,
+    withTranslation(),
     connect(mapStateToProps, mapDispatchToProps)
 )(Header);

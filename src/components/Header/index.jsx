@@ -25,11 +25,11 @@ class Header extends React.Component {
             <header className="header">
                 <Navbar collapseOnSelect expand="lg" bg="muted" variant="dark">
                     <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
-                    <Nav className="mr-auto">
+                    <Nav className="mr-auto" defaultActiveKey={this.props.history.location.pathname}>
                         {this.props.appConfig.grids.map((grid, index) =>
                             <Nav.Item key={index}>
                                 <LinkContainer to={`/grid/${grid.name}`}>
-                                    <Nav.Link key={index}>
+                                    <Nav.Link>
                                         {t(grid.name)}
                                     </Nav.Link>
                                 </LinkContainer>

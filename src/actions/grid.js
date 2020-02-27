@@ -2,9 +2,10 @@ export const GRID_REQUEST = 'GRID_REQUEST';
 export const GRID_SUCCESS = 'GRID_SUCCESS';
 export const GRID_FAILURE = 'GRID_FAILURE';
 
-export const gridRequest = () => (
+export const gridRequest = (name) => (
     {
-        type: GRID_REQUEST
+        type: GRID_REQUEST,
+        name
     }
 );
 
