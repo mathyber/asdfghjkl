@@ -1,5 +1,5 @@
 import React from "react";
-import {Card, Col, Dropdown, Form, Nav, Row, Table} from "react-bootstrap";
+import {Button, ButtonToolbar, Card, Col, Dropdown, Form, Nav, Row, Table} from "react-bootstrap";
 import {compose} from "redux";
 import {withTranslation} from "react-i18next";
 import {connect} from "react-redux";
@@ -7,10 +7,16 @@ import selector from "../../selectors/userInfo";
 import selectorGrid from "../../selectors/grid";
 import {withRouter} from "react-router";
 import actions from "../../actions";
+import ModalRepresentation from "./modalRepresentation";
+import {IoIosAdd} from "react-icons/io";
+import {MdSettings} from "react-icons/md";
 
 class Grid extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            modalShow: false
+        };
     }
 
     componentDidMount() {
@@ -20,6 +26,7 @@ class Grid extends React.Component {
 
     render() {
         const {t} = this.props;
+
         return (
             <div>
                 <Card.Body>
@@ -28,7 +35,7 @@ class Grid extends React.Component {
                             {t("representation")}
                         </Form.Label>
                         <Col sm="5">
-
+                            <Row>
                             <Dropdown>
                                 <Dropdown.Toggle variant="dark" id="dropdown-basic">
                                     {}
@@ -36,9 +43,29 @@ class Grid extends React.Component {
 
                                 <Dropdown.Menu>
                                     <Dropdown.Item>{t("default_representation")}</Dropdown.Item>
-                                    <Dropdown.Item onClick={()=>console.log("+")}>{t("create_btn")}</Dropdown.Item>
+                                    <Dropdown.Item  onClick={() => this.setState({modalShow: true})}>
+                                        <ButtonToolbar>
+                                        <Button variant="muted">
+                                            <IoIosAdd size="30px"/>{t("create_btn")}
+                                        </Button>
+                                        <ModalRepresentation
+                                            show={this.state.modalShow}
+                                            onHide={() => this.setState({modalShow: false})}
+                                        />
+                                    </ButtonToolbar>
+                                    </Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
+                                <ButtonToolbar>
+                                    <Button variant="dark" onClick={() => this.setState({modalShow: true})}>
+                                        <MdSettings/>
+                                    </Button>
+                                    <ModalRepresentation
+                                        show={this.state.modalShow}
+                                        onHide={() => this.setState({modalShow: false})}
+                                    />
+                                </ButtonToolbar>
+                            </Row>
                         </Col>
                     </Form.Group>
 

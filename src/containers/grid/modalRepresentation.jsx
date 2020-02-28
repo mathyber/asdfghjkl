@@ -1,39 +1,53 @@
 import * as React from "react";
 import {Button, Modal} from "react-bootstrap";
+import {compose} from "redux";
+import {withRouter} from "react-router";
+import {withTranslation} from "react-i18next";
+import {connect} from "react-redux";
 
 class ModalRepresentation extends React.Component {
     constructor(props) {
         super(props);
+
     }
 
     render() {
         const {t} = this.props;
         return (
             <Modal
-                {...props}
+                {...this.props}
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        Modal heading
+                  swdfghjk
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <h4>Centered Modal</h4>
+                    <h4>ModalRepresentation</h4>
                     <p>
-                        Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-                        dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-                        consectetur ac, vestibulum at eros.
+                        tydyn
                     </p>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={props.onHide}>Close</Button>
+                    <Button onClick={this.props.onHide}>Close</Button>
                 </Modal.Footer>
             </Modal>
         );
     }
 }
 
-export default ModalRepresentation;
+const mapStateToProps = state => ({
+
+});
+
+const mapDispatchToProps = dispatch => ({
+});
+
+export default compose(
+    withRouter,
+    withTranslation(),
+    connect(mapStateToProps, mapDispatchToProps)
+)(ModalRepresentation);
