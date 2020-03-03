@@ -2,6 +2,20 @@ body {
   margin: 0;
   padding: 0;
   font-family: Arial, serif;
+
+  .list-group{
+    height: 400px;
+    overflow-y: scroll;
+    padding: 4px;
+  }
+
+  .list-group__item{
+    text-align: center;
+    padding: 6px;
+    margin: 4px;
+    background-color: rgb(232, 232, 232);
+  }
+
   .header {
     background-color: rgb(53, 59, 70);
 

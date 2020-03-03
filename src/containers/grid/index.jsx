@@ -63,6 +63,7 @@ class Grid extends React.Component {
                                     <ModalRepresentation
                                         show={this.state.modalShow}
                                         onHide={() => this.setState({modalShow: false})}
+                                        grids={this.props.appConfig.grids}
                                     />
                                 </ButtonToolbar>
                             </Row>
