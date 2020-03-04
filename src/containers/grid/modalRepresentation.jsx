@@ -6,14 +6,15 @@ import {withTranslation} from "react-i18next";
 import {connect} from "react-redux";
 import selector from "../../selectors/userInfo";
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import actions from "../../actions";
 
 
-// fake data generator
+/*// fake data generator
 const getItems = (count, offset = 0) =>
     Array.from({ length: count }, (v, k) => k).map(k => ({
         id: `item-${k + offset}`,
         content: `item ${k + offset}`
-    }));
+    }));*/
 
 const reorder = (list, startIndex, endIndex) => {
     const result = Array.from(list);
@@ -42,12 +43,28 @@ class ModalRepresentation extends React.Component {
         super(props);
     }
 
-
-
     state = {
-        items: getItems(10),
-        selected: getItems(5, 10)
+        items: [],
+        selected: []
     };
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(prevProps!==this.props){
+        console.log(this.props.columns);
+        this.setState({
+            items: this.props.columns
+        });
+        console.log(this.state.items);
+        }
+    }
+
+    componentDidMount() {
+        console.log(this.props.columns);
+        this.setState({
+            items: this.props.columns
+        });
+        console.log(this.state.items);
+    }
 
     id2List = {
         droppable: 'items',
@@ -95,13 +112,13 @@ class ModalRepresentation extends React.Component {
 
     render() {
         const {t} = this.props;
-console.log(this.props.grids);
+        console.log(this.props.columns);
+
         return (
 
             <Modal
                 onHide={this.props.onHide}
                 show={this.props.show}
-                grids={this.props.grids}
                 size="xl"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
@@ -144,8 +161,8 @@ console.log(this.props.grids);
                                         >
                                         {this.state.items.map((item, index) => (
                                             <Draggable
-                                                key={item.id}
-                                                draggableId={item.id}
+                                                key={item.displayNameKey}
+                                                draggableId={item.name}
                                                 index={index}>
                                                 {(provided, snapshot) => (
                                                     <Card
@@ -154,7 +171,7 @@ console.log(this.props.grids);
                                                         {...provided.draggableProps}
                                                         {...provided.dragHandleProps}
                                                    >
-                                                        {item.content}
+                                                    {t(item.displayNameKey)}
                                                     </Card>
                                                 )}
                                             </Draggable>
@@ -176,8 +193,8 @@ console.log(this.props.grids);
                                         >
                                         {this.state.selected.map((item, index) => (
                                             <Draggable
-                                                key={item.id}
-                                                draggableId={item.id}
+                                                key={item.displayNameKey}
+                                                draggableId={item.name}
                                                 index={index}>
                                                 {(provided, snapshot) => (
                                                    <Card
@@ -186,7 +203,7 @@ console.log(this.props.grids);
                                                         {...provided.draggableProps}
                                                         {...provided.dragHandleProps}
                                                         >
-                                                        {item.content}
+                                                        {t(item.displayNameKey)}
                                                     </Card>
                                                 )}
                                             </Draggable>
@@ -213,7 +230,9 @@ console.log(this.props.grids);
     }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = (state, props) => ({
+    columns: selector.getColumns(state, props.match.params.name)
+});
 
 const mapDispatchToProps = dispatch => ({
 
