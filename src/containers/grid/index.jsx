@@ -77,7 +77,7 @@ class Grid extends React.Component {
                             {
                                 this.props.appConfig.grids.map(gridElem => {
                                         if (gridElem.name === this.props.match.params.name) return gridElem.columns.map((el, index) => {
-                                            return el.isDefault && <th key={index}> {t(el.name)}</th>
+                                            return el.isDefault && <th key={index}> {t(el.displayNameKey)}</th>
                                         })
                                     }
                                 )

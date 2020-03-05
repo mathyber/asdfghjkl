@@ -11,12 +11,12 @@ i18n
     .use(LanguageDetector)
     .use(initReactI18next)
     .init({
-        whitelist: ['ru', 'en'],
         fallbackLng: language,
         lng: language,
         ns: 'translation',
         defaultNS: 'translation',
-        debug: true,
+        keySeparator: false,
+        debug: false,
         detection: {
             order: ["localStorage", "navigator"],
             caches: ["localStorage"]
@@ -28,7 +28,7 @@ i18n
             escapeValue: false
         },
         react: {
-            wait: false,
+            wait: true,
             useSuspense: true
         }
     });
