@@ -34,6 +34,7 @@ const move = (source, destination, droppableSource, droppableDestination) => {
 class ModalRepresentation extends React.Component {
     constructor(props) {
         super(props);
+        this.nameRef = React.createRef();
     }
 
     state = {
@@ -45,18 +46,21 @@ class ModalRepresentation extends React.Component {
         if(prevProps !== this.props){
        // console.log(this.props.columns);
         this.setState({
-            items: this.props.columns
+            items: this.props.columns,
+         //ДОДЕЛАТЬ   items: this.props.isCreate ? this.props.columns : this.props.columns.filter(col => this.props.representations[this.props.representationSelected].map()),
+            selected: this.props.isCreate ? [] : this.props.representations && this.props.representations[this.props.representationSelected]
         });
        // console.log(this.state.items);
         }
     }
 
     componentDidMount() {
-        console.log(this.props.columns);
+      //  console.log(this.props.columns);
         this.setState({
-            items: this.props.columns
-        });
-        console.log(this.state.items);
+            selected:  this.props.isCreate ? [] :  this.props.representations && this.props.representations[this.props.representationSelected]
+        })
+
+      //  console.log(this.state.items);
     }
 
     id2List = {
@@ -103,37 +107,26 @@ class ModalRepresentation extends React.Component {
         }
     };
 
+    deleteOnClick = () => {
+        this.props.onHide();
+        console.log("-");
+    };
+
     saveOnClick = () => {
         this.props.saveRepresentation({
             name: this.props.match.params.name,
-            reprName: "sssssssssssssssssss",
-            reprColumns:
-                [{name: "orderNumber",
-        displayNameKey: "orderNumber",
-        type: "Link",
-        isDefault: true,
-        isFixedPosition: false,
-        isRequired: true,
-        isReadOnly: true,
-        decimals: null},
-        {
-        source: "orderState",
-        showRawValue: false,
-        name: "status",
-        displayNameKey: "Order.Status",
-        type: "State",
-        isDefault: true,
-        isFixedPosition: false,
-        isRequired: false,
-        isReadOnly: true,
-        decimals: null}],
+            reprName: this.nameRef.current.value,
+            reprColumns: this.state.selected,
             representations: this.props.representations
         });
+      //  this.state.selected = [];
+        this.props.onHide();
     };
 
     render() {
         const {t} = this.props;
-        console.log(this.props.representations);
+       console.log(this.props.representations && this.props.representations[this.props.representationSelected]);
+       // console.log(this.props.isCreate);
 
         return (
 
@@ -146,7 +139,7 @@ class ModalRepresentation extends React.Component {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        {t("Create representation")}
+                        { this.props.isCreate? t("Create representation") : `${t("Edit representation")} ${this.props.representationSelected}`}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -154,6 +147,7 @@ class ModalRepresentation extends React.Component {
                         <label htmlFor="basic-url">{t("name")}</label>
                         <InputGroup className="mb-3">
                             <FormControl
+                                ref={this.nameRef}
                                 aria-describedby="basic-addon2"
                             />
                         </InputGroup>
@@ -241,7 +235,7 @@ class ModalRepresentation extends React.Component {
                 </Modal.Body>
                 <Modal.Footer>
                     <div className="mr-auto">
-                        <Button variant="danger">{t("delete")}</Button>
+                        <Button variant="danger" onClick={this.deleteOnClick}>{t("delete")}</Button>
                     </div>
                     <Button variant="secondary" onClick={this.props.onHide}>{t("CancelButton")}</Button>
                     <Button variant="primary" onClick={this.saveOnClick}>{t("SaveButton")}</Button>

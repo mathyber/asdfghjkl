@@ -16,7 +16,9 @@ class Grid extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            modalShow: false
+            modalShow: false,
+            representationSelectedName: "default_representation",
+            isCreate: true
         };
     }
 
@@ -29,6 +31,7 @@ class Grid extends React.Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.match.params.name !== this.props.match.params.name) {
             this.props.getRepresentation(this.props.match.params.name);
+            this.setState({representationSelectedName: "default_representation"})
         }
     }
 
@@ -46,37 +49,43 @@ class Grid extends React.Component {
                             <Row>
                                 <Dropdown>
                                     <Dropdown.Toggle variant="dark" id="dropdown-basic">
-                                        {}
+                                        {t(this.state.representationSelectedName)}
                                     </Dropdown.Toggle>
 
                                     <Dropdown.Menu>
-                                        <Dropdown.Item>{t("default_representation")}</Dropdown.Item>
+                                        <Dropdown.Item onClick={() => this.setState({representationSelectedName: "default_representation"})}>
+                                            {t("default_representation")}
+                                        </Dropdown.Item>
                                         {
                                             this.props.representations && Object.keys(this.props.representations).map(key =>
-                                                <Dropdown.Item>{key}</Dropdown.Item>)
+                                                <Dropdown.Item key={key} onClick={() => this.setState({representationSelectedName: key})}>{key}</Dropdown.Item>)
                                         }
 
                                         <ButtonToolbar>
-                                            <Dropdown.Item onClick={() => this.setState({modalShow: true})}>
+                                            <Dropdown.Item onClick={() => this.setState({modalShow: true, isCreate: true})}>
                                                 <IoIosAdd size="30px"/>{t("create_btn")}
                                             </Dropdown.Item>
 
                                             <ModalRepresentation
                                                 show={this.state.modalShow}
                                                 onHide={() => this.setState({modalShow: false})}
+                                                isCreate={this.state.isCreate}
+                                                representationSelected={this.state.representationSelectedName}
                                             />
                                         </ButtonToolbar>
 
                                     </Dropdown.Menu>
                                 </Dropdown>
                                 <ButtonToolbar>
-                                    <Button variant="dark" onClick={() => this.setState({modalShow: true})}>
+                                    <Button variant="dark" disabled={this.state.representationSelectedName === "default_representation"}
+                                            onClick={() => this.setState({modalShow: true,  isCreate: false})}>
                                         <MdSettings/>
                                     </Button>
                                     <ModalRepresentation
                                         show={this.state.modalShow}
                                         onHide={() => this.setState({modalShow: false})}
-                                        grids={this.props.appConfig.grids}
+                                        isCreate={this.state.isCreate}
+                                        representationSelected={this.state.representationSelectedName}
                                     />
                                 </ButtonToolbar>
                             </Row>
