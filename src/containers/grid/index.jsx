@@ -10,6 +10,7 @@ import actions from "../../actions";
 import ModalRepresentation from "./modalRepresentation";
 import {IoIosAdd} from "react-icons/io";
 import {MdSettings} from "react-icons/md";
+import selectorRepr from "../../selectors/representation";
 
 class Grid extends React.Component {
     constructor(props) {
@@ -20,8 +21,15 @@ class Grid extends React.Component {
     }
 
     componentDidMount() {
-        this.props.gridRequest(this.props.match.params.name);
+        //   this.props.gridRequest(this.props.match.params.name);
+        this.props.getRepresentation(this.props.match.params.name);
         //  console.log(this.props)
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.match.params.name !== this.props.match.params.name) {
+            this.props.getRepresentation(this.props.match.params.name);
+        }
     }
 
     render() {
@@ -36,26 +44,31 @@ class Grid extends React.Component {
                         </Form.Label>
                         <Col sm="5">
                             <Row>
-                            <Dropdown>
-                                <Dropdown.Toggle variant="dark" id="dropdown-basic">
-                                    {}
-                                </Dropdown.Toggle>
+                                <Dropdown>
+                                    <Dropdown.Toggle variant="dark" id="dropdown-basic">
+                                        {}
+                                    </Dropdown.Toggle>
 
-                                <Dropdown.Menu>
-                                    <Dropdown.Item>{t("default_representation")}</Dropdown.Item>
-                                    <Dropdown.Item  onClick={() => this.setState({modalShow: true})}>
+                                    <Dropdown.Menu>
+                                        <Dropdown.Item>{t("default_representation")}</Dropdown.Item>
+                                        {
+                                            this.props.representations && Object.keys(this.props.representations).map(key =>
+                                                <Dropdown.Item>{key}</Dropdown.Item>)
+                                        }
+
                                         <ButtonToolbar>
-                                        <Button variant="muted">
-                                            <IoIosAdd size="30px"/>{t("create_btn")}
-                                        </Button>
-                                        <ModalRepresentation
-                                            show={this.state.modalShow}
-                                            onHide={() => this.setState({modalShow: false})}
-                                        />
-                                    </ButtonToolbar>
-                                    </Dropdown.Item>
-                                </Dropdown.Menu>
-                            </Dropdown>
+                                            <Dropdown.Item onClick={() => this.setState({modalShow: true})}>
+                                                <IoIosAdd size="30px"/>{t("create_btn")}
+                                            </Dropdown.Item>
+
+                                            <ModalRepresentation
+                                                show={this.state.modalShow}
+                                                onHide={() => this.setState({modalShow: false})}
+                                            />
+                                        </ButtonToolbar>
+
+                                    </Dropdown.Menu>
+                                </Dropdown>
                                 <ButtonToolbar>
                                     <Button variant="dark" onClick={() => this.setState({modalShow: true})}>
                                         <MdSettings/>
@@ -104,11 +117,13 @@ class Grid extends React.Component {
 
 const mapStateToProps = state => ({
     appConfig: selector.getAppConfig(state),
-    gridData: selectorGrid.gridData(state)
+    gridData: selectorGrid.gridData(state),
+    representations: selectorRepr.getRepr(state)
 });
 
 const mapDispatchToProps = dispatch => ({
-    gridRequest: (payload) => dispatch(actions.gridRequest(payload))
+    gridRequest: (payload) => dispatch(actions.gridRequest(payload)),
+    getRepresentation: (payload) => dispatch(actions.getRepresentation(payload))
 });
 
 export default compose(

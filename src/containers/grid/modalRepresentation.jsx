@@ -4,17 +4,10 @@ import {compose} from "redux";
 import {withRouter} from "react-router";
 import {withTranslation} from "react-i18next";
 import {connect} from "react-redux";
-import selector from "../../selectors/userInfo";
+import selectorUserInfo from "../../selectors/userInfo";
+import selectorRepr from "../../selectors/representation";
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import actions from "../../actions";
-
-
-/*// fake data generator
-const getItems = (count, offset = 0) =>
-    Array.from({ length: count }, (v, k) => k).map(k => ({
-        id: `item-${k + offset}`,
-        content: `item ${k + offset}`
-    }));*/
 
 const reorder = (list, startIndex, endIndex) => {
     const result = Array.from(list);
@@ -49,12 +42,12 @@ class ModalRepresentation extends React.Component {
     };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(prevProps!==this.props){
-        console.log(this.props.columns);
+        if(prevProps !== this.props){
+       // console.log(this.props.columns);
         this.setState({
             items: this.props.columns
         });
-        console.log(this.state.items);
+       // console.log(this.state.items);
         }
     }
 
@@ -110,9 +103,37 @@ class ModalRepresentation extends React.Component {
         }
     };
 
+    saveOnClick = () => {
+        this.props.saveRepresentation({
+            name: this.props.match.params.name,
+            reprName: "sssssssssssssssssss",
+            reprColumns:
+                [{name: "orderNumber",
+        displayNameKey: "orderNumber",
+        type: "Link",
+        isDefault: true,
+        isFixedPosition: false,
+        isRequired: true,
+        isReadOnly: true,
+        decimals: null},
+        {
+        source: "orderState",
+        showRawValue: false,
+        name: "status",
+        displayNameKey: "Order.Status",
+        type: "State",
+        isDefault: true,
+        isFixedPosition: false,
+        isRequired: false,
+        isReadOnly: true,
+        decimals: null}],
+            representations: this.props.representations
+        });
+    };
+
     render() {
         const {t} = this.props;
-        console.log(this.props.columns);
+        console.log(this.props.representations);
 
         return (
 
@@ -223,7 +244,7 @@ class ModalRepresentation extends React.Component {
                         <Button variant="danger">{t("delete")}</Button>
                     </div>
                     <Button variant="secondary" onClick={this.props.onHide}>{t("CancelButton")}</Button>
-                    <Button variant="primary">{t("SaveButton")}</Button>
+                    <Button variant="primary" onClick={this.saveOnClick}>{t("SaveButton")}</Button>
                 </Modal.Footer>
             </Modal>
         );
@@ -231,11 +252,13 @@ class ModalRepresentation extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
-    columns: selector.getColumns(state, props.match.params.name)
+    columns: selectorUserInfo.getColumns(state, props.match.params.name),
+    representations: selectorRepr.getRepr(state)
 });
 
 const mapDispatchToProps = dispatch => ({
-
+    saveRepresentation: (payload) => dispatch(actions.saveRepresentation(payload)),
+    getRepresentation: (payload) => dispatch(actions.getRepresentation(payload))
 });
 
 export default compose(

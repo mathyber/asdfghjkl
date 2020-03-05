@@ -6,7 +6,7 @@ import { postman, setAccessToken } from "../utils/postman";
 
 function* workerUserInfo() {
     try {
-        yield setAccessToken(JwtHelper.token)
+        yield setAccessToken(JwtHelper.token);
         const userData = yield call(() => postman.get("identity/userInfo"));
         const profile = yield call(() => postman.get("profile/info"));
         const appConfig = yield call(() => postman.get("appConfiguration"));
