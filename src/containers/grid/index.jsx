@@ -30,7 +30,6 @@ class Grid extends React.Component {
         if (prevProps.match.params.name !== this.props.match.params.name) {
             this.props.getRepresentation(this.props.match.params.name);
             this.setState({representationSelectedName: "default_representation"});
-            console.log("fvdsgsdgsd                "+this.state.representationSelectedName);
         }
     }
 
