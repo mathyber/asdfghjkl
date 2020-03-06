@@ -48,11 +48,14 @@ class ModalRepresentation extends React.Component {
             let a = this.props.representations && this.props.representations[this.props.representationSelected];
 
             this.setState({
-                items: this.props.isCreate || this.props.representationSelected === "default_representation" ?
+                items: this.props.isCreate || this.props.representationSelected === "default_representation" || !a ?
                     this.props.columns : this.props.columns.filter(v => !a.some(v2 => v.name === v2.name)),
-                selected: this.props.isCreate ? [] : this.props.representations && this.props.representations[this.props.representationSelected]
+                selected: this.props.isCreate || this.props.representationSelected === "default_representation" || !a ?
+                    [] : this.props.representations && this.props.representations[this.props.representationSelected]
             });
-            // console.log(this.state.items);
+
+          //  console.log("ddd      " + this.props.representationSelected);
+          //  console.log(this.props.representations);
         }
     }
 
@@ -110,45 +113,43 @@ class ModalRepresentation extends React.Component {
     };
 
     deleteOnClick = () => {
-        console.log(this.props.representations);
+      //  console.log(this.props.representations);
         delete this.props.representations[this.props.representationSelected];
-        console.log(this.props.representations);
+      //  console.log(this.props.representations);
         this.props.deleteRepresentation({
             name: this.props.match.params.name,
             representations: this.props.representations
         });
+        this.props.setRepr();
         this.props.onHide();
-        console.log(this.props.representations);
+       // console.log(this.props.representations);
 
     };
 
     saveOnClick = () => {
-        if (this.nameRef.current.value && this.state.selected.length !== 0)
-        this.props.saveRepresentation({
-            name: this.props.match.params.name,
-            reprName: this.nameRef.current.value,
-            reprColumns: this.state.selected,
-            representations: this.props.representations
-        });
-        //vremenno
-        else console.log("ERROR: NE VSYO VVEL!!!!");
+        if (this.nameRef.current.value && this.state.selected.length !== 0) {
+            if (!this.props.isCreate) {
+                    delete this.props.representations[this.props.representationSelected];
+                    this.props.setRepr(this.nameRef.current.value);
+                }
+            this.props.saveRepresentation({
+                name: this.props.match.params.name,
+                reprName: this.nameRef.current.value,
+                reprColumns: this.state.selected,
+                representations: this.props.representations
+            });
+            this.props.onHide();
+        }
+        else console.log("ERROR: NE VSYO VVEL!!!!"); //vremenno
         //  this.state.selected = [];
-        this.props.onHide();
-    };
 
-    editOnClick = () => {
-        if (this.nameRef.current.value && this.state.selected.length !== 0)
-            delete this.props.representations[this.props.representationSelected];
-        else console.log("ERROR: NE VSYO VVEL!!!!");
-        this.saveOnClick();
     };
-
 
     render() {
         const {t} = this.props;
-     //   console.log(this.props.columns);
-       console.log(this.props.representations);
-      //  console.log(this.state.items);
+        //   console.log(this.props.columns);
+        // console.log(this.props.representations);
+        //  console.log(this.state.items);
 
         return (
 
@@ -259,13 +260,14 @@ class ModalRepresentation extends React.Component {
                 <Modal.Footer>
                     {
                         !this.props.isCreate ?
-                        <div className="mr-auto">
-                            <Button variant="danger" onClick={this.deleteOnClick}>{t("delete")}</Button>
-                        </div> : undefined
+                            <div className="mr-auto">
+                                <Button variant="danger" onClick={this.deleteOnClick}>{t("delete")}</Button>
+                            </div> : undefined
                     }
 
                     <Button variant="secondary" onClick={this.props.onHide}>{t("CancelButton")}</Button>
-                    <Button variant="primary" onClick={this.props.isCreate ? this.saveOnClick : this.editOnClick}>{t("SaveButton")}</Button>
+                    <Button variant="primary"
+                            onClick={this.saveOnClick}>{t("SaveButton")}</Button>
                 </Modal.Footer>
             </Modal>
         );

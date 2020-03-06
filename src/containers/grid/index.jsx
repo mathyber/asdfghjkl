@@ -23,15 +23,14 @@ class Grid extends React.Component {
     }
 
     componentDidMount() {
-        //   this.props.gridRequest(this.props.match.params.name);
         this.props.getRepresentation(this.props.match.params.name);
-
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.match.params.name !== this.props.match.params.name) {
             this.props.getRepresentation(this.props.match.params.name);
-            this.setState({representationSelectedName: "default_representation"})
+            this.setState({representationSelectedName: "default_representation"});
+            console.log("fvdsgsdgsd                "+this.state.representationSelectedName);
         }
     }
 
@@ -58,7 +57,7 @@ class Grid extends React.Component {
                                             {t("default_representation")}
                                         </Dropdown.Item>
                                         {
-                                            this.props.representations && Object.keys(this.props.representations).map(key =>
+                                            this.props.representations && Object.keys(this.props.representations).map((key) =>
                                                 <Dropdown.Item key={key} onClick={() => this.setState({representationSelectedName: key})}>{key}</Dropdown.Item>)
                                         }
 
@@ -85,6 +84,7 @@ class Grid extends React.Component {
                                     <ModalRepresentation
                                         show={this.state.modalShow}
                                         onHide={() => this.setState({modalShow: false})}
+                                        setRepr={(name="default_representation") => this.setState({representationSelectedName: name})}
                                         isCreate={this.state.isCreate}
                                         representationSelected={this.state.representationSelectedName}
                                     />

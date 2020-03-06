@@ -10,7 +10,6 @@ function* getRepresentation({name}) {
         console.log(name);
         yield setAccessToken(JwtHelper.token);
         const reprData = yield call(() => postman.get(`userSettings/${name}`));
-        //yield console.log(reprData);
         yield put(actions.representationSuccess({representation: reprData}));
     } catch (e) {
         console.log(e);
@@ -20,17 +19,12 @@ function* getRepresentation({name}) {
 
 function* saveRepresentation({name, reprName, reprColumns, representations}) {
     try {
-       /* console.log("dvgwewg:     " + name);
-        console.log("dvgwewg:     " + reprName);
-        console.log(representations);*/
         yield setAccessToken(JwtHelper.token);
         yield call(() => postman.post(`userSettings/${name}`,{value: JSON.stringify({
-          //     key: name,
                 [reprName]: reprColumns,
                 ...representations
             }) }));
-
-        // yield put(actions.userInfoSuccess({userInfo: userData, profile: profile, appConfig: appConfig}));
+        yield put(actions.getRepresentation(name));
     } catch (e) {
         console.log(e);
         yield put(actions.representationFailure(e));
@@ -43,7 +37,7 @@ function* deleteRepresentation({name, representations}) {
         yield call(() => postman.post(`userSettings/${name}`,{value: JSON.stringify({
                 ...representations
             }) }));
-
+        yield put(actions.getRepresentation(name));
     } catch (e) {
         console.log(e);
         yield put(actions.representationFailure(e));
