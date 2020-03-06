@@ -1,7 +1,6 @@
-import {USER_INFO_SUCCESS} from "./userInfo";
-
 export const GET_REPRESENTATION = 'GET_REPRESENTATION';
 export const SAVE_REPRESENTATION = 'SAVE_REPRESENTATION';
+export const DELETE_REPRESENTATION = 'DELETE_REPRESENTATION';
 export const REPRESENTATION_SUCCESS = 'REPRESENTATION_SUCCESS';
 export const REPRESENTATION_FAILURE = 'REPRESENTATION_FAILURE';
 
@@ -25,6 +24,15 @@ export const saveRepresentation = ({name, reprName, reprColumns, representations
         name, reprName, reprColumns, representations
     }
 );
+
+
+export const deleteRepresentation = ({name, representations}) => (
+    {
+        type: DELETE_REPRESENTATION,
+        name, representations
+    }
+);
+
 
 export const representationFailure = () => (
     {

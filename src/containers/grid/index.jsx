@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, ButtonToolbar, Card, Col, Dropdown, Form, Nav, Row, Table} from "react-bootstrap";
+import {Button, ButtonToolbar, Card, Col, Dropdown, Form, Row, Table} from "react-bootstrap";
 import {compose} from "redux";
 import {withTranslation} from "react-i18next";
 import {connect} from "react-redux";
@@ -25,7 +25,7 @@ class Grid extends React.Component {
     componentDidMount() {
         //   this.props.gridRequest(this.props.match.params.name);
         this.props.getRepresentation(this.props.match.params.name);
-        //  console.log(this.props)
+
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -37,6 +37,7 @@ class Grid extends React.Component {
 
     render() {
         const {t} = this.props;
+       // console.log(this.props.representations);
 
         return (
             <div>

@@ -6,7 +6,7 @@ import {withTranslation} from "react-i18next";
 import {connect} from "react-redux";
 import selectorUserInfo from "../../selectors/userInfo";
 import selectorRepr from "../../selectors/representation";
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd';
 import actions from "../../actions";
 
 const reorder = (list, startIndex, endIndex) => {
@@ -43,24 +43,26 @@ class ModalRepresentation extends React.Component {
     };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(prevProps !== this.props){
-       // console.log(this.props.columns);
-        this.setState({
-            items: this.props.columns,
-         //ДОДЕЛАТЬ   items: this.props.isCreate ? this.props.columns : this.props.columns.filter(col => this.props.representations[this.props.representationSelected].map()),
-            selected: this.props.isCreate ? [] : this.props.representations && this.props.representations[this.props.representationSelected]
-        });
-       // console.log(this.state.items);
+        if (prevProps !== this.props) {
+            // console.log(this.props.columns);
+            let a = this.props.representations && this.props.representations[this.props.representationSelected];
+
+            this.setState({
+                items: this.props.isCreate || this.props.representationSelected === "default_representation" ?
+                    this.props.columns : this.props.columns.filter(v => !a.some(v2 => v.name === v2.name)),
+                selected: this.props.isCreate ? [] : this.props.representations && this.props.representations[this.props.representationSelected]
+            });
+            // console.log(this.state.items);
         }
     }
 
     componentDidMount() {
-      //  console.log(this.props.columns);
+        //  console.log(this.props.columns);
         this.setState({
-            selected:  this.props.isCreate ? [] :  this.props.representations && this.props.representations[this.props.representationSelected]
+            selected: this.props.isCreate ? [] : this.props.representations && this.props.representations[this.props.representationSelected]
         })
 
-      //  console.log(this.state.items);
+        //  console.log(this.state.items);
     }
 
     id2List = {
@@ -71,7 +73,7 @@ class ModalRepresentation extends React.Component {
     getList = id => this.state[this.id2List[id]];
 
     onDragEnd = result => {
-        const { source, destination } = result;
+        const {source, destination} = result;
 
         // dropped outside the list
         if (!destination) {
@@ -85,10 +87,10 @@ class ModalRepresentation extends React.Component {
                 destination.index
             );
 
-            let state = { items };
+            let state = {items};
 
             if (source.droppableId === 'droppable2') {
-                state = { selected: items };
+                state = {selected: items};
             }
 
             this.setState(state);
@@ -108,25 +110,45 @@ class ModalRepresentation extends React.Component {
     };
 
     deleteOnClick = () => {
+        console.log(this.props.representations);
+        delete this.props.representations[this.props.representationSelected];
+        console.log(this.props.representations);
+        this.props.deleteRepresentation({
+            name: this.props.match.params.name,
+            representations: this.props.representations
+        });
         this.props.onHide();
-        console.log("-");
+        console.log(this.props.representations);
+
     };
 
     saveOnClick = () => {
+        if (this.nameRef.current.value && this.state.selected.length !== 0)
         this.props.saveRepresentation({
             name: this.props.match.params.name,
             reprName: this.nameRef.current.value,
             reprColumns: this.state.selected,
             representations: this.props.representations
         });
-      //  this.state.selected = [];
+        //vremenno
+        else console.log("ERROR: NE VSYO VVEL!!!!");
+        //  this.state.selected = [];
         this.props.onHide();
     };
 
+    editOnClick = () => {
+        if (this.nameRef.current.value && this.state.selected.length !== 0)
+            delete this.props.representations[this.props.representationSelected];
+        else console.log("ERROR: NE VSYO VVEL!!!!");
+        this.saveOnClick();
+    };
+
+
     render() {
         const {t} = this.props;
-       console.log(this.props.representations && this.props.representations[this.props.representationSelected]);
-       // console.log(this.props.isCreate);
+     //   console.log(this.props.columns);
+       console.log(this.props.representations);
+      //  console.log(this.state.items);
 
         return (
 
@@ -139,7 +161,7 @@ class ModalRepresentation extends React.Component {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        { this.props.isCreate? t("Create representation") : `${t("Edit representation")} ${this.props.representationSelected}`}
+                        {this.props.isCreate ? t("Create representation") : `${t("Edit representation")} ${this.props.representationSelected}`}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -147,6 +169,7 @@ class ModalRepresentation extends React.Component {
                         <label htmlFor="basic-url">{t("name")}</label>
                         <InputGroup className="mb-3">
                             <FormControl
+                                defaultValue={this.props.isCreate ? undefined : this.props.representationSelected}
                                 ref={this.nameRef}
                                 aria-describedby="basic-addon2"
                             />
@@ -165,68 +188,68 @@ class ModalRepresentation extends React.Component {
                                 <Row>
                                     <Col sm={6}>
 
-                            <label htmlFor="basic-url">{t("Available")}</label>
+                                        <label htmlFor="basic-url">{t("Available")}</label>
 
-                            <Droppable droppableId="droppable">
-                                {(provided, snapshot) => (
-                                    <Card
-                                        variant="flush"
-                                        className="list-group"
-                                        ref={provided.innerRef}
-                                        >
-                                        {this.state.items.map((item, index) => (
-                                            <Draggable
-                                                key={item.displayNameKey}
-                                                draggableId={item.name}
-                                                index={index}>
-                                                {(provided, snapshot) => (
-                                                    <Card
-                                                        className="list-group__item"
-                                                        ref={provided.innerRef}
-                                                        {...provided.draggableProps}
-                                                        {...provided.dragHandleProps}
-                                                   >
-                                                    {t(item.displayNameKey)}
-                                                    </Card>
-                                                )}
-                                            </Draggable>
-                                        ))}
-                                        {provided.placeholder}
-                                    </Card>
-                                )}
-                            </Droppable>
+                                        <Droppable droppableId="droppable">
+                                            {(provided, snapshot) => (
+                                                <Card
+                                                    variant="flush"
+                                                    className="list-group"
+                                                    ref={provided.innerRef}
+                                                >
+                                                    {this.state.items.map((item, index) => (
+                                                        <Draggable
+                                                            key={item.displayNameKey}
+                                                            draggableId={item.name}
+                                                            index={index}>
+                                                            {(provided, snapshot) => (
+                                                                <Card
+                                                                    className="list-group__item"
+                                                                    ref={provided.innerRef}
+                                                                    {...provided.draggableProps}
+                                                                    {...provided.dragHandleProps}
+                                                                >
+                                                                    {t(item.displayNameKey)}
+                                                                </Card>
+                                                            )}
+                                                        </Draggable>
+                                                    ))}
+                                                    {provided.placeholder}
+                                                </Card>
+                                            )}
+                                        </Droppable>
 
                                     </Col>
                                     <Col sm={6}>
-                            <label htmlFor="basic-url">{t("Selected")}</label>
-                            <Droppable droppableId="droppable2">
-                                {(provided, snapshot) => (
-                                    <Card
-                                        variant="flush"
-                                        className="list-group"
-                                        ref={provided.innerRef}
-                                        >
-                                        {this.state.selected.map((item, index) => (
-                                            <Draggable
-                                                key={item.displayNameKey}
-                                                draggableId={item.name}
-                                                index={index}>
-                                                {(provided, snapshot) => (
-                                                   <Card
-                                                    className="list-group__item"
-                                                        ref={provided.innerRef}
-                                                        {...provided.draggableProps}
-                                                        {...provided.dragHandleProps}
-                                                        >
-                                                        {t(item.displayNameKey)}
-                                                    </Card>
-                                                )}
-                                            </Draggable>
-                                        ))}
-                                        {provided.placeholder}
-                                    </Card>
-                                )}
-                            </Droppable>
+                                        <label htmlFor="basic-url">{t("Selected")}</label>
+                                        <Droppable droppableId="droppable2">
+                                            {(provided, snapshot) => (
+                                                <Card
+                                                    variant="flush"
+                                                    className="list-group"
+                                                    ref={provided.innerRef}
+                                                >
+                                                    {this.state.selected.map((item, index) => (
+                                                        <Draggable
+                                                            key={item.displayNameKey}
+                                                            draggableId={item.name}
+                                                            index={index}>
+                                                            {(provided, snapshot) => (
+                                                                <Card
+                                                                    className="list-group__item"
+                                                                    ref={provided.innerRef}
+                                                                    {...provided.draggableProps}
+                                                                    {...provided.dragHandleProps}
+                                                                >
+                                                                    {t(item.displayNameKey)}
+                                                                </Card>
+                                                            )}
+                                                        </Draggable>
+                                                    ))}
+                                                    {provided.placeholder}
+                                                </Card>
+                                            )}
+                                        </Droppable>
                                     </Col>
                                 </Row>
                             </Col>
@@ -234,11 +257,15 @@ class ModalRepresentation extends React.Component {
                     </Card.Body>
                 </Modal.Body>
                 <Modal.Footer>
-                    <div className="mr-auto">
-                        <Button variant="danger" onClick={this.deleteOnClick}>{t("delete")}</Button>
-                    </div>
+                    {
+                        !this.props.isCreate ?
+                        <div className="mr-auto">
+                            <Button variant="danger" onClick={this.deleteOnClick}>{t("delete")}</Button>
+                        </div> : undefined
+                    }
+
                     <Button variant="secondary" onClick={this.props.onHide}>{t("CancelButton")}</Button>
-                    <Button variant="primary" onClick={this.saveOnClick}>{t("SaveButton")}</Button>
+                    <Button variant="primary" onClick={this.props.isCreate ? this.saveOnClick : this.editOnClick}>{t("SaveButton")}</Button>
                 </Modal.Footer>
             </Modal>
         );
@@ -252,7 +279,8 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = dispatch => ({
     saveRepresentation: (payload) => dispatch(actions.saveRepresentation(payload)),
-    getRepresentation: (payload) => dispatch(actions.getRepresentation(payload))
+    getRepresentation: (payload) => dispatch(actions.getRepresentation(payload)),
+    deleteRepresentation: (payload) => dispatch(actions.deleteRepresentation(payload))
 });
 
 export default compose(
