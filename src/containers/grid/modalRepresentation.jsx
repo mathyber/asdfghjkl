@@ -245,6 +245,7 @@ class ModalRepresentation extends React.Component {
                                                                     {t(item.displayNameKey)}
                                                                 </Card>
                                                             )}
+                                                            
                                                         </Draggable>
                                                     ))}
                                                     {provided.placeholder}

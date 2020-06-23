@@ -15,9 +15,10 @@ import selectorRepr from "../../selectors/representation";
 class Grid extends React.Component {
     constructor(props) {
         super(props);
+        
         this.state = {
             modalShow: false,
-            representationSelectedName: "default_representation",
+            representationSelectedName: null,
             isCreate: true
         };
     }
@@ -27,15 +28,20 @@ class Grid extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.match.params.name !== this.props.match.params.name) {
+        if (prevState.representationSelectedName !== this.state.representationSelectedName) {
             this.props.getRepresentation(this.props.match.params.name);
-            this.setState({representationSelectedName: "default_representation"});
+          //  this.setState({representationSelectedName: "default_representation"});
         }
+    }
+
+    representationSelectedName(name) {
+        name ? localStorage.setItem("representationSelectedName", name) : localStorage.removeItem("representationSelectedName");
+        this.setState({representationSelectedName: name})
     }
 
     render() {
         const {t} = this.props;
-       // console.log(this.props.representations);
+        console.log(this.props.representation);
 
         return (
             <div>
@@ -48,16 +54,16 @@ class Grid extends React.Component {
                             <Row>
                                 <Dropdown>
                                     <Dropdown.Toggle variant="dark" id="dropdown-basic">
-                                        {t(this.state.representationSelectedName)}
+                                        {t(localStorage.getItem("representationSelectedName"))}
                                     </Dropdown.Toggle>
 
                                     <Dropdown.Menu>
-                                        <Dropdown.Item onClick={() => this.setState({representationSelectedName: "default_representation"})}>
+                                        <Dropdown.Item onClick={() => this.representationSelectedName()}>
                                             {t("default_representation")}
                                         </Dropdown.Item>
                                         {
-                                            this.props.representations && Object.keys(this.props.representations).map((key) =>
-                                                <Dropdown.Item key={key} onClick={() => this.setState({representationSelectedName: key})}>{key}</Dropdown.Item>)
+                                            this.props.representations && this.props.representations.map((name) =>
+                                                <Dropdown.Item key={name} onClick={() => this.representationSelectedName(name)}>{name}</Dropdown.Item>)
                                         }
 
                                         <ButtonToolbar>
@@ -96,13 +102,16 @@ class Grid extends React.Component {
                     <Table responsive>
                         <thead>
                         <tr>
+
                             {
-                                this.props.appConfig.grids.map(gridElem => {
-                                        if (gridElem.name === this.props.match.params.name) return gridElem.columns.map((el, index) => {
-                                            return el.isDefault && <th key={index}> {t(el.displayNameKey)}</th>
-                                        })
-                                    }
-                                )
+                                //переделать
+                                this.props.representation ? this.props.representation.map(el => <th key={el}> {t(el.displayNameKey)}</th>) :
+                                    this.props.appConfig.grids.map(gridElem => {
+                                            if (gridElem.name === this.props.match.params.name) return gridElem.columns.map(el => {
+                                                return el.isDefault && <th key={el}> {t(el.displayNameKey)}</th>
+                                            })
+                                        }
+                                    )
                             }
                         </tr>
                         </thead>
@@ -127,7 +136,8 @@ class Grid extends React.Component {
 const mapStateToProps = state => ({
     appConfig: selector.getAppConfig(state),
     gridData: selectorGrid.gridData(state),
-    representations: selectorRepr.getRepr(state)
+    representations: selectorRepr.getRepr(state),
+    representation: selectorRepr.repr(state, localStorage.getItem("representationSelectedName"))
 });
 
 const mapDispatchToProps = dispatch => ({
